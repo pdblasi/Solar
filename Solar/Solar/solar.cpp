@@ -137,12 +137,25 @@ int main(int argc, char *argv[])
 
 void Display()
 {
+    glClear(GL_COLOR_BUFFER_BIT); 
 
+    //ask the planets to draw themselves. 
+    for (int i = 0; i < Planets.size(); i++)
+    {
+        //Draw Planet
+    }
+
+    glutSwapBuffers(); 
 }
 
 void Reshape(int width, int height)
 {
+    glViewport(0, 0, width, height); 
+    double ratio = double(width) / height; 
 
+    glMatrixMode(GL_PROJECTION); 
+    glLoadIdentity();
+    gluPerspective(60.0, ratio, 1.0, 30.0);
 }
 
 void Mouse(int button, int state, int x, int y)
