@@ -45,7 +45,15 @@ c:\> ./solar
 @verbatim
 Date          Modification
 ------------  --------------------------------------------------------------
+Nov 04, 2014  Initial project setup. Registered callback functions and set
+			  keyboard input to map straight to the Menu function.
 
+Nov 08, 2014  Started to implement viewing. Basic set up for black screen.
+
+Nov 11, 2014  Set up basic program flow and created structs to hold the
+			  program and camera state to minimize global variables. Got
+			  some of the simple state updates for the program state and
+			  camera state started. Rotation and zoom hasn't been touched.
 @endverbatim
 *
 *****************************************************************************/
@@ -55,6 +63,7 @@ Date          Modification
 #include <string>
 
 #include "Planet.h"
+#include "Structs.h"
 
 using namespace std;
 
@@ -65,6 +74,10 @@ void Keyboard(unsigned char key, int x, int y);
 void SpecialKeys(int key, int x, int y);
 void Mouse(int button, int state, int x, int y);
 void Menu(int val);
+void Animate(int frame);
+
+//Other Functions
+void CreateClickMenu();
 
 //Constants
 const unsigned char ESCAPE_KEY = 27;
@@ -72,8 +85,20 @@ const unsigned char ESCAPE_KEY = 27;
 const int INIT_SCREEN_WIDTH = 500;
 const int INIT_SCREEN_HEIGHT = 500;
 
+const float HORIZONTAL_PAN_INC = 1;
+const float VERTICAL_PAN_INC = 1;
+const float ZOOM_INC = 1;
+
+const float VERTICAL_ROTATE_INC = .2;
+
+const float RESOLUTION_INC = 1;
+
+const int ANIM_TIME_INC = 1;
+
 //Global Data
 vector<Planet> Planets;
+ProgramState State;
+CameraState CamState;
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -100,33 +125,12 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
 	glutMouseFunc(Mouse);
+	glutTimerFunc(State.AnimTime, Animate, State.Frame);
 
 	//Create Menu
-	glutCreateMenu(Menu);
-	glutAddMenuEntry("Solar System Simulator (PB & CT Nov 2014)", -1);
-	glutAddMenuEntry("=========================================", -1);
-	glutAddMenuEntry("Toggle Wireframe/Polygon Rendering   (p)", 0);
-	glutAddMenuEntry("Toggle Flat/Smooth Shading           (f)", 1);
-	glutAddMenuEntry("Toggle Texture Mapping               (t)", 2);
-	glutAddMenuEntry("Zoom In                            (+/Z)", 3);
-	glutAddMenuEntry("Zoom Out                           (-/z)", 4);
-	glutAddMenuEntry("Rotate Up                      (UpArrow)", 5);
-	glutAddMenuEntry("Rotate Down                  (DownArrow)", 6);
-	glutAddMenuEntry("Pan Left                   (LeftArrow/x)", 7);
-	glutAddMenuEntry("Pan Right                 (RightArrow/X)", 8);
-	glutAddMenuEntry("Pan Up                               (Y)", 9);
-	glutAddMenuEntry("Pan Down                             (y)", 10);
-	glutAddMenuEntry("Increase Wireframe Resolution        (N)", 11);
-	glutAddMenuEntry("Decrease Wireframe Resolution        (n)", 12);
-	glutAddMenuEntry("Speed Up Simulation                  (A)", 13);
-	glutAddMenuEntry("Slow Down Simulation                 (a)", 14);
-	glutAddMenuEntry("Suspend/Resume Animation             (r)", 15);
-	glutAddMenuEntry("Single Step                          (s)", 16);
-	glutAddMenuEntry("Quit                               (Esc)", 17);
+	CreateClickMenu();
 
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
-	//Create Heavenly Bodies
+	//Create Planets
 
 	//Start window
 	glutMainLoop();
@@ -134,15 +138,34 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+void Animate(int frame)
+{
+	State.Frame = frame + 1;
+
+	//Ask planet to update itself
+	for (int i = 0; i < Planets.size(); i++)
+	{
+		Planets[i].Update();
+	}
+
+	if (State.Paused == false)
+	{
+		glutTimerFunc(State.AnimTime, Animate, State.Frame);
+	}
+
+	glutPostRedisplay();
+}
 
 void Display()
 {
-    glClear(GL_COLOR_BUFFER_BIT); 
+    glClear(GL_COLOR_BUFFER_BIT);
 
-    //ask the planets to draw themselves. 
+	//Set up camera using CamState
+
+    //Ask the planets to draw themselves.
     for (int i = 0; i < Planets.size(); i++)
     {
-        //Draw Planet
+		Planets[i].Draw(State);
     }
 
     glutSwapBuffers(); 
@@ -168,10 +191,13 @@ void Menu(int val)
 	switch (val)
 	{
 	case 0:		//Toggle Wireframe/Polygon Rendering
+		State.Wireframe = !State.Wireframe;
 		break;
 	case 1:		//Toggle Flat/Smooth Shading
+		State.Flat = !State.Flat;
 		break;
 	case 2:		//Toggle Texture Mapping
+		State.Texture = !State.Texture;
 		break;
 	case 3:		//Zoom In
 		break;
@@ -182,24 +208,39 @@ void Menu(int val)
 	case 6:		//Rotate Down
 		break;
 	case 7:		//Pan Left
+		CamState.Position[0] -= HORIZONTAL_PAN_INC;
+		CamState.LookAt[0] -= HORIZONTAL_PAN_INC;
 		break;
 	case 8:		//Pan Right
+		CamState.Position[0] += HORIZONTAL_PAN_INC;
+		CamState.LookAt[0] += HORIZONTAL_PAN_INC;
 		break;
 	case 9:		//Pan Up
+		CamState.Position[1] += VERTICAL_PAN_INC;
+		CamState.LookAt[1] += VERTICAL_PAN_INC;
 		break;
 	case 10:	//Pan Down
+		CamState.Position[1] -= VERTICAL_PAN_INC;
+		CamState.Position[1] -= VERTICAL_PAN_INC;
 		break;
 	case 11:	//Increase Wireframe Resolution
+		State.Resolution += RESOLUTION_INC;
 		break;
 	case 12:	//Decrease Wireframe Resolution
+		State.Resolution -= RESOLUTION_INC;
 		break;
 	case 13:	//Speed Up Simulation
+		State.AnimTime -= ANIM_TIME_INC;
 		break;
 	case 14:	//Slow Down Simulation
+		State.AnimTime += ANIM_TIME_INC;
 		break;
 	case 15:	//Suspend/Resume Animation
+		State.Paused = !State.Paused;
 		break;
 	case 16:	//Single Step
+		State.Paused = true;
+		glutPostRedisplay();
 		break;
 	case 17:	//Quit
 		glutLeaveMainLoop();
@@ -281,4 +322,31 @@ void SpecialKeys(int key, int x, int y)
 		Menu(8);
 		break;
 	}
+}
+
+void CreateClickMenu()
+{
+	glutCreateMenu(Menu);
+	glutAddMenuEntry("Solar System Simulator (PB & CT Nov 2014)", -1);
+	glutAddMenuEntry("=========================================", -1);
+	glutAddMenuEntry("Toggle Wireframe/Polygon Rendering   (p)", 0);
+	glutAddMenuEntry("Toggle Flat/Smooth Shading           (f)", 1);
+	glutAddMenuEntry("Toggle Texture Mapping               (t)", 2);
+	glutAddMenuEntry("Zoom In                            (+/Z)", 3);
+	glutAddMenuEntry("Zoom Out                           (-/z)", 4);
+	glutAddMenuEntry("Rotate Up                      (UpArrow)", 5);
+	glutAddMenuEntry("Rotate Down                  (DownArrow)", 6);
+	glutAddMenuEntry("Pan Left                   (LeftArrow/x)", 7);
+	glutAddMenuEntry("Pan Right                 (RightArrow/X)", 8);
+	glutAddMenuEntry("Pan Up                               (Y)", 9);
+	glutAddMenuEntry("Pan Down                             (y)", 10);
+	glutAddMenuEntry("Increase Wireframe Resolution        (N)", 11);
+	glutAddMenuEntry("Decrease Wireframe Resolution        (n)", 12);
+	glutAddMenuEntry("Speed Up Simulation                  (A)", 13);
+	glutAddMenuEntry("Slow Down Simulation                 (a)", 14);
+	glutAddMenuEntry("Suspend/Resume Animation             (r)", 15);
+	glutAddMenuEntry("Single Step                          (s)", 16);
+	glutAddMenuEntry("Quit                               (Esc)", 17);
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }

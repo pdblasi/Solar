@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Planet.h" />
+    <ClInclude Include="Structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
