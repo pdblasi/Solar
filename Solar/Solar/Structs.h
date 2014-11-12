@@ -21,6 +21,15 @@ struct ProgramState
 struct CameraState
 {
 	float Position[3], LookAt[3];
+
+	CameraState()
+	{
+		for (int i = 0; i < 3; i++)
+			LookAt[i] = 0;
+
+		for (int i = 0; i < 3; i++)
+			Position[i] = 1;
+	}
 };
 
 #endif

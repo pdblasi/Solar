@@ -54,6 +54,9 @@ Nov 11, 2014  Set up basic program flow and created structs to hold the
 			  program and camera state to minimize global variables. Got
 			  some of the simple state updates for the program state and
 			  camera state started. Rotation and zoom hasn't been touched.
+
+Nov 11, 2014  Set up basic data for planet and the constructor. Not yet
+			  implemented.
 @endverbatim
 *
 *****************************************************************************/

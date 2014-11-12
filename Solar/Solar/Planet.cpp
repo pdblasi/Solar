@@ -1,6 +1,6 @@
 #include "Planet.h"
 
-Planet::Planet()
+Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, double color[3], Planet* orbiting)
 {
 }
 
