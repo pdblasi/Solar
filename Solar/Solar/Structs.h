@@ -5,8 +5,8 @@ struct ProgramState
 {
 	bool Wireframe, Flat, Texture, Paused;
 	double Resolution;
-	int AnimTime;
-	long long Frame;
+	unsigned int AnimTime;
+	int Frame;
 
 	ProgramState()
 	{

@@ -39,7 +39,7 @@ On Linux:
 c:\> ./solar
 @endverbatim
 *
-* @section todo_bugs_modification_section Todo, Bugs, and Modificationss
+* @section todo_bugs_modification_section Todo, Bugs, and Modifications
 *
 * @par Modifications and Development Timeline:
 @verbatim
@@ -67,6 +67,8 @@ Nov 11, 2014  Set up basic data for planet and the constructor. Not yet
 
 #include "Planet.h"
 #include "Structs.h"
+#include "CameraFunctions.h"
+#include "ProgramStateFunctions.h"
 
 using namespace std;
 
@@ -88,20 +90,8 @@ const unsigned char ESCAPE_KEY = 27;
 const int INIT_SCREEN_WIDTH = 500;
 const int INIT_SCREEN_HEIGHT = 500;
 
-const float HORIZONTAL_PAN_INC = 1;
-const float VERTICAL_PAN_INC = 1;
-const float ZOOM_INC = 1;
-
-const float VERTICAL_ROTATE_INC = .2;
-
-const float RESOLUTION_INC = 1;
-
-const int ANIM_TIME_INC = 1;
-
 //Global Data
 vector<Planet> Planets;
-ProgramState State;
-CameraState CamState;
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -146,7 +136,7 @@ void Animate(int frame)
 	State.Frame = frame + 1;
 
 	//Ask planet to update itself
-	for (int i = 0; i < Planets.size(); i++)
+	for (unsigned int i = 0; i < Planets.size(); i++)
 	{
 		Planets[i].Update();
 	}
@@ -166,7 +156,7 @@ void Display()
 	//Set up camera using CamState
 
     //Ask the planets to draw themselves.
-    for (int i = 0; i < Planets.size(); i++)
+    for (unsigned int i = 0; i < Planets.size(); i++)
     {
 		Planets[i].Draw(State);
     }
@@ -203,28 +193,28 @@ void Menu(int val)
 		State.Texture = !State.Texture;
 		break;
 	case 3:		//Zoom In
+		ZoomIn();
 		break;
 	case 4:		//Zoom Out
+		ZoomOut();
 		break;
 	case 5:		//Rotate Up
+		RotateUp();
 		break;
 	case 6:		//Rotate Down
+		RotateDown();
 		break;
 	case 7:		//Pan Left
-		CamState.Position[0] -= HORIZONTAL_PAN_INC;
-		CamState.LookAt[0] -= HORIZONTAL_PAN_INC;
+		PanLeft();
 		break;
 	case 8:		//Pan Right
-		CamState.Position[0] += HORIZONTAL_PAN_INC;
-		CamState.LookAt[0] += HORIZONTAL_PAN_INC;
+		PanRight();
 		break;
 	case 9:		//Pan Up
-		CamState.Position[1] += VERTICAL_PAN_INC;
-		CamState.LookAt[1] += VERTICAL_PAN_INC;
+		PanUp();
 		break;
 	case 10:	//Pan Down
-		CamState.Position[1] -= VERTICAL_PAN_INC;
-		CamState.Position[1] -= VERTICAL_PAN_INC;
+		PanDown();
 		break;
 	case 11:	//Increase Wireframe Resolution
 		State.Resolution += RESOLUTION_INC;
