@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cmath>
+#include <vector>
 
 #include "Structs.h"
 
@@ -20,6 +21,9 @@ public:
 	float* GetPosition();
 	float GetRadius();
 	float GetName();
+
+	static vector<Planet> CreateSolarSystem();
+	//static vector<Planet> CreateTrueScaleSolarSystem();
 
 private:
 	string name;

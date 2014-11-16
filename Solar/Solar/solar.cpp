@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
 	CreateClickMenu();
 
 	//Create Planets
+	Planets = Planet::CreateSolarSystem();
 
 	//Start window
 	glutMainLoop();
