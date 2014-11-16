@@ -46,7 +46,7 @@ vector<Planet> Planet::CreateSolarSystem()
 
 	if (solarSystem.size() == 0)
 	{
-		solarSystem.push_back(Planet("Sun", .5, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL));
+		solarSystem.push_back(Planet("Sun", 696000, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL));
 	}
 
 	return solarSystem;
@@ -65,7 +65,7 @@ void Planet::Draw(ProgramState state)
 	glColor3dv(_color);
 
 	//Reset transformations
-	glLoadIdentity();
+    glPushMatrix();
 
 	//Translate to position
 	glTranslatef(_position[0], _position[1], _position[2]);
@@ -112,6 +112,8 @@ void Planet::Draw(ProgramState state)
 		//Draw Object
 		gluSphere(_planet, _radius, state.Resolution, state.Resolution);
 	}
+
+    glPopMatrix();
 }
 
 void Planet::Update()

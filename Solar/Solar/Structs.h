@@ -28,8 +28,8 @@ struct CameraState
 			LookAt[i] = 0;
 
 		Position[0] = 0;
-		Position[1] = -1;
-		Position[2] = 0;
+		Position[1] = 0;
+		Position[2] = -10000000;
 	}
 };
 

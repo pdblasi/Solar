@@ -89,6 +89,8 @@ const unsigned char ESCAPE_KEY = 27;
 
 const int INIT_SCREEN_WIDTH = 500;
 const int INIT_SCREEN_HEIGHT = 500;
+int SCREEN_WIDTH; 
+int SCREEN_HEIGHT;
 
 //Global Data
 vector<Planet> Planets;
@@ -155,6 +157,14 @@ void Display()
     glClear(GL_COLOR_BUFFER_BIT);
 
 	//Set up camera using CamState
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, double(SCREEN_WIDTH/SCREEN_HEIGHT), 0, 100000000);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
+        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 1, 0);
 
     //Ask the planets to draw themselves.
     for (unsigned int i = 0; i < Planets.size(); i++)
@@ -162,21 +172,25 @@ void Display()
 		Planets[i].Draw(State);
     }
 
+
     glutSwapBuffers(); 
 }
 
 void Reshape(int width, int height)
 {
+    SCREEN_WIDTH = width; 
+    SCREEN_HEIGHT = height; 
+
     glViewport(0, 0, width, height); 
     double ratio = double(width) / height; 
 
     glMatrixMode(GL_PROJECTION); 
     glLoadIdentity();
-	gluPerspective(60.0, ratio, -100000000, 100000000);
+	gluPerspective(60.0, ratio, 0, 100000000);
 
-
+    //glMatrixMode(GL_MODELVIEW); 
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
+        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 1, 0);
 }
 
 void Mouse(int button, int state, int x, int y)
