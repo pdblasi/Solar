@@ -1,6 +1,8 @@
 #ifndef __PLANET_H__
 #define __PLANET_H__
 
+#include <gl\freeglut.h>
+#include <gl\GLU.h>
 #include <string>
 #include <cmath>
 #include <vector>
@@ -9,28 +11,34 @@
 
 using namespace std;
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 class Planet
 {
 public:
-	Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, double color[3], Planet* orbiting);
+	Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], double color[3], Planet* orbiting);
 	~Planet();
 
 	void Draw(ProgramState state);
 	void Update();
 
-	float* GetPosition();
+	const float* GetPosition();
 	float GetRadius();
-	float GetName();
+	string GetName();
 
 	static vector<Planet> CreateSolarSystem();
 	//static vector<Planet> CreateTrueScaleSolarSystem();
 
 private:
-	string name;
+	string _name;
+	GLUquadricObj* _planet;
 
 	float _radius, _orbitDistance, _daysInYear, _dayRatio;
-	float _position[3], _positionIncrements[3];
-	float _rotationInc;
+	float _dayAngle, _rotationIncrement;
+	float _orbitAngle, _orbitIncrement;
+	float _position[3], _axis[3];
 
 	double _color[3];
 

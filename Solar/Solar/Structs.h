@@ -4,7 +4,7 @@
 struct ProgramState
 {
 	bool Wireframe, Flat, Texture, Paused;
-	double Resolution;
+	int Resolution;
 	unsigned int AnimTime;
 	int Frame;
 
@@ -27,8 +27,9 @@ struct CameraState
 		for (int i = 0; i < 3; i++)
 			LookAt[i] = 0;
 
-		for (int i = 0; i < 3; i++)
-			Position[i] = 1;
+		Position[0] = 0;
+		Position[1] = -1;
+		Position[2] = 0;
 	}
 };
 

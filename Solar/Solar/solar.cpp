@@ -172,7 +172,7 @@ void Reshape(int width, int height)
 
     glMatrixMode(GL_PROJECTION); 
     glLoadIdentity();
-    gluPerspective(60.0, ratio, -1000, 100000000);
+	gluPerspective(60.0, ratio, -100000000, 100000000);
 
 
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
