@@ -184,13 +184,13 @@ void Menu(int val)
 	switch (val)
 	{
 	case 0:		//Toggle Wireframe/Polygon Rendering
-		State.Wireframe = !State.Wireframe;
+		ToggleWireframe();
 		break;
 	case 1:		//Toggle Flat/Smooth Shading
-		State.Flat = !State.Flat;
+		ToggleShading();
 		break;
 	case 2:		//Toggle Texture Mapping
-		State.Texture = !State.Texture;
+		ToggleTexture();
 		break;
 	case 3:		//Zoom In
 		ZoomIn();
@@ -217,23 +217,22 @@ void Menu(int val)
 		PanDown();
 		break;
 	case 11:	//Increase Wireframe Resolution
-		State.Resolution += RESOLUTION_INC;
+		IncreaseWireframeResolution();
 		break;
 	case 12:	//Decrease Wireframe Resolution
-		State.Resolution -= RESOLUTION_INC;
+		DecreaseWireframeResolution();
 		break;
 	case 13:	//Speed Up Simulation
-		State.AnimTime -= ANIM_TIME_INC;
+		SpeedUpSimulation();
 		break;
 	case 14:	//Slow Down Simulation
-		State.AnimTime += ANIM_TIME_INC;
+		SlowDownSimulation();
 		break;
 	case 15:	//Suspend/Resume Animation
-		State.Paused = !State.Paused;
+		TogglePause();
 		break;
 	case 16:	//Single Step
-		State.Paused = true;
-		glutPostRedisplay();
+		Step();
 		break;
 	case 17:	//Quit
 		glutLeaveMainLoop();

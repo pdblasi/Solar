@@ -1,6 +1,9 @@
 #ifndef __CAMERAFUNCTIONS_H__
 #define __CAMERAFUNCTIONS_H__
 
+#include <gl\freeglut.h>
+#include <gl\GLU.h>
+
 #include "Structs.h"
 
 extern CameraState CamState;

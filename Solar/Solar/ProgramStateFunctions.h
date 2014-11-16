@@ -1,6 +1,9 @@
 #ifndef __PROGRAMSTATEFUNCTIONS_H__
 #define __PROGRAMSTATEFUNCTIONS_H__
 
+#include <gl\freeglut.h>
+#include <gl\GLU.h>
+
 #include "Structs.h"
 
 extern ProgramState State;
