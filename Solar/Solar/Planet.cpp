@@ -32,8 +32,8 @@ Planet::Planet(string name, float radius, float orbitDistance, float daysInYear,
 	}
 
 	_orbitAngle = _dayAngle = 0; 
-	_orbitIncrement = (float)(2 * M_PI / _daysInYear) / 24;
-	_rotationIncrement = (float)(2 * M_PI / _dayRatio) / 24;
+	_orbitIncrement = (float)(2 * M_PI / _daysInYear);
+	_rotationIncrement = (float)(2 * M_PI / _dayRatio);
 }
 
 Planet::~Planet()
@@ -116,7 +116,7 @@ void Planet::Draw(ProgramState state)
 
 void Planet::Update()
 {
-	_dayAngle = fmodf(_dayAngle + _rotationIncrement, (float)(2 * M_PI));
+	_dayAngle = _dayAngle + _rotationIncrement;// (float)(2 * M_PI);
 
 	if (_orbiting == NULL)
 	{

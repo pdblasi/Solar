@@ -12,7 +12,7 @@ struct ProgramState
 	{
 		Wireframe = Flat = true;
 		Texture = Paused = false;
-		Resolution = 30;
+		Resolution = 15;
 		AnimTime = 30;
 		Frame = 1;
 	}

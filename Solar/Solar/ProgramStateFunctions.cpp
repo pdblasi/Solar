@@ -29,12 +29,14 @@ void DecreaseWireframeResolution()
 
 void SpeedUpSimulation()
 {
-	State.AnimTime -= ANIM_TIME_INC;
+	if (State.AnimTime > ANIM_TIME_INC)
+		State.AnimTime -= ANIM_TIME_INC;
 }
 
 void SlowDownSimulation()
 {
-	State.AnimTime += ANIM_TIME_INC;
+	if (State.AnimTime < 500)
+		State.AnimTime += ANIM_TIME_INC;
 }
 
 void TogglePause()

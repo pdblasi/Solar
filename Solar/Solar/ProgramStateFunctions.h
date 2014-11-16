@@ -8,7 +8,7 @@
 
 extern ProgramState State;
 
-const float RESOLUTION_INC = 1;
+const int RESOLUTION_INC = 1;
 const int ANIM_TIME_INC = 1;
 
 void ToggleWireframe();

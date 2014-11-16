@@ -234,10 +234,16 @@ void Menu(int val)
 		SlowDownSimulation();
 		break;
 	case 15:	//Suspend/Resume Animation
-		TogglePause();
+		State.Paused = !State.Paused;
+		if (!State.Paused)
+		{
+			glutTimerFunc(State.AnimTime, Animate, State.Frame + 1);
+		}
 		break;
 	case 16:	//Single Step
-		Step();
+		State.Paused = true;
+		Animate(State.Frame + 1);
+		glutPostRedisplay();
 		break;
 	case 17:	//Quit
 		glutLeaveMainLoop();
