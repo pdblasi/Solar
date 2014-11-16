@@ -172,7 +172,9 @@ void Reshape(int width, int height)
 
     glMatrixMode(GL_PROJECTION); 
     glLoadIdentity();
-    gluPerspective(60.0, ratio, 1.0, 30.0);
+    gluPerspective(60.0, ratio, -1000, 100000000);
+
+    gluLookAt(0, 0, -1000000, 0, 0, 0, 0, 0, 1); 
 }
 
 void Mouse(int button, int state, int x, int y)
