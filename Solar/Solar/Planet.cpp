@@ -8,6 +8,20 @@ Planet::~Planet()
 {
 }
 
+vector<Planet> Planet::CreateSolarSystem()
+{
+	static vector<Planet> solarSystem;
+
+	return solarSystem;
+}
+
+//vector<Planet> Planet::CreateTrueScaleSolarSystem()
+//{
+//	static vector<Planet> solarSystem;
+//
+//	return solarSystem;
+//}
+
 void Planet::Draw(ProgramState state)
 {
 	//Set up color
