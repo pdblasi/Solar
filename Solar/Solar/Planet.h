@@ -44,6 +44,9 @@ private:
 	double _color[3];
 
 	Planet* _orbiting;
+
+	static float scaleDist(float dist);
+	static float scaleSize(float radius);
 };
 
 #endif

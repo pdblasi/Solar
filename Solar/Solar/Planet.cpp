@@ -1,7 +1,44 @@
 #include "Planet.h"
 
-#define scaleDist(dist) (((((dist) - 58)*1082)/4434) + 58) * 10000
-#define scaleSize(size) (size)
+float Planet::scaleDist(float dist)
+{
+	//Moons and rings
+	if (dist < 58)
+	{
+		return dist * 100000;
+	}
+	//Planets
+	else
+	{
+		//Normalizes the distances from the distance to mercury to
+		//five times the distance of mars
+		return (((dist - 58) * 1082 / 4434) + 58) * 10000 - 69600;
+	}
+}
+
+float Planet::scaleSize(float size)
+{
+	//Inner planets and moons
+	if (size < 10000)
+	{
+		return size * 2;
+	}
+	//Ice Giants
+	else if (size < 30000)
+	{
+		return size;
+	}
+	//Gas Giants
+	else if (size < 100000)
+	{
+		return size / 2;
+	}
+	//Stars
+	else
+	{
+		return size / 10;
+	}
+}
 
 Planet::Planet()
 {
@@ -50,18 +87,18 @@ Planet::~Planet()
 
 void Planet::CreateSolarSystem(Planet solarSystem[])
 {
-	solarSystem[0] = Planet("Sun", 69600, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
+	solarSystem[0] = Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
 
-	solarSystem[1] = Planet("Mercury", 2439, scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
-	solarSystem[2] = Planet("Venus", 6052, scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
-	solarSystem[3] = Planet("Earth", 6378, scaleDist(150), 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
-	solarSystem[4] = Planet("Mars", 3394, scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
-	solarSystem[5] = Planet("Jupiter", 71398 / 2, scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
-	solarSystem[6] = Planet("Saturn", 60270 / 2, scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
-	solarSystem[7] = Planet("Uranus", 25550, scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
-	solarSystem[8] = Planet("Neptune", 24750, scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[1] = Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
+	solarSystem[2] = Planet("Venus", scaleSize(6052), scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[3] = Planet("Earth", scaleSize(6378), scaleDist(150), 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[4] = Planet("Mars", scaleSize(3394), scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[5] = Planet("Jupiter", scaleSize(71398), scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[6] = Planet("Saturn", scaleSize(60270), scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[7] = Planet("Uranus", scaleSize(25550), scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[8] = Planet("Neptune", scaleSize(24750), scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
 
-	solarSystem[9] = Planet("Moon", scaleSize(1738), 38400, 27.3, 27.3, new float[]{0, 0, 1}, new double[]{1, 1, 1}, &solarSystem[3]);
+	solarSystem[9] = Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new double[]{1, 1, 1}, &solarSystem[3]);
 }
 
 //vector<Planet> Planet::CreateTrueScaleSolarSystem()
