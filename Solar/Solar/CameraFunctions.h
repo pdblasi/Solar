@@ -8,9 +8,9 @@
 
 extern CameraState CamState;
 
-const float HORIZONTAL_PAN_INC = .1;
-const float VERTICAL_PAN_INC = .1;
-const float ZOOM_INC = .1;
+const float HORIZONTAL_PAN_INC = 100000;
+const float VERTICAL_PAN_INC = 100000;
+const float ZOOM_INC = 100000;
 const float VERTICAL_ROTATE_INC = .01;
 extern float angle; 
 

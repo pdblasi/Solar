@@ -18,6 +18,7 @@ using namespace std;
 class Planet
 {
 public:
+	Planet();
 	Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], double color[3], Planet* orbiting);
 	~Planet();
 
@@ -28,7 +29,7 @@ public:
 	float GetRadius();
 	string GetName();
 
-	static vector<Planet> CreateSolarSystem();
+	static void CreateSolarSystem(Planet solarSystem[]);
 	//static vector<Planet> CreateTrueScaleSolarSystem();
 
 private:

@@ -1,5 +1,13 @@
 #include "Planet.h"
 
+#define scaleDist(dist) (((((dist) - 58)*1082)/4434) + 58) * 10000
+#define scaleSize(size) (size)
+
+Planet::Planet()
+{
+
+}
+
 Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], double color[3], Planet* orbiting)
 {
 	_planet = gluNewQuadric(); 
@@ -40,23 +48,34 @@ Planet::~Planet()
 {
 }
 
-vector<Planet> Planet::CreateSolarSystem()
+void Planet::CreateSolarSystem(Planet solarSystem[])
 {
-	static vector<Planet> solarSystem;
+	solarSystem[0] = Planet("Sun", 69600, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
 
-	if (solarSystem.size() == 0)
-	{
-		solarSystem.push_back(Planet("Sun", 696000, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL));
-	}
+	solarSystem[1] = Planet("Mercury", 2439, scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
+	solarSystem[2] = Planet("Venus", 6052, scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[3] = Planet("Earth", 6378, scaleDist(150), 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[4] = Planet("Mars", 3394, scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[5] = Planet("Jupiter", 71398 / 2, scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[6] = Planet("Saturn", 60270 / 2, scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[7] = Planet("Uranus", 25550, scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[8] = Planet("Neptune", 24750, scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
 
-	return solarSystem;
+	solarSystem[9] = Planet("Moon", scaleSize(1738), 38400, 27.3, 27.3, new float[]{0, 0, 1}, new double[]{1, 1, 1}, &solarSystem[3]);
 }
 
 //vector<Planet> Planet::CreateTrueScaleSolarSystem()
 //{
-//	static vector<Planet> solarSystem;
+//	solarSystem[0] = Planet("Sun", 696000, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
 //
-//	return solarSystem;
+//	solarSystem[1] = Planet("Mercury", 2439, 580000, 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
+//	solarSystem[2] = Planet("Venus", 6052, 1080000, 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
+//	solarSystem[3] = Planet("Earth", 6378, 1500000, 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
+//	solarSystem[4] = Planet("Mars", 3394, 2280000, 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
+//	solarSystem[5] = Planet("Jupiter", 71398, 7790000, 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
+//	solarSystem[6] = Planet("Saturn", 60270, 14240000, 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
+//	solarSystem[7] = Planet("Uranus", 25550, 28670000, 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
+//	solarSystem[8] = Planet("Neptune", 24750, 44920000, 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
 //}
 
 void Planet::Draw(ProgramState state)
@@ -71,12 +90,15 @@ void Planet::Draw(ProgramState state)
 	glTranslatef(_position[0], _position[1], _position[2]);
 
 	//Rotate to proper axis
-	glRotatef(_axis[0], 1.0, 0.0, 0.0);
-	glRotatef(_axis[1], 0.0, 1.0, 0.0);
-	glRotatef(_axis[2], 0.0, 0.0, 1.0);
+	//glRotatef(_axis[0], 1.0, 0.0, 0.0);
+	//glRotatef(_axis[1], 0.0, 1.0, 0.0);
+	//glRotatef(_axis[2], 0.0, 0.0, 1.0);
+
+	//Rotate to proper vertical orientation
+	//glRotatef(M_PI / 2, 1.0, 0.0, 0.0);
 		
 	//Rotate along axis by day based increment
-	glRotatef(_dayAngle, 0.0, 0.0, 1.0);
+	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
 
 	if (state.Texture)
 	{

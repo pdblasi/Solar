@@ -89,11 +89,14 @@ const unsigned char ESCAPE_KEY = 27;
 
 const int INIT_SCREEN_WIDTH = 500;
 const int INIT_SCREEN_HEIGHT = 500;
-int SCREEN_WIDTH; 
-int SCREEN_HEIGHT;
+
+const int NUM_PLANETS = 10;
 
 //Global Data
-vector<Planet> Planets;
+Planet Planets[NUM_PLANETS];
+
+int SCREEN_WIDTH; 
+int SCREEN_HEIGHT;
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -126,7 +129,7 @@ int main(int argc, char *argv[])
 	CreateClickMenu();
 
 	//Create Planets
-	Planets = Planet::CreateSolarSystem();
+	Planet::CreateSolarSystem(Planets);
 
 	//Start window
 	glutMainLoop();
@@ -139,7 +142,7 @@ void Animate(int frame)
 	State.Frame = frame + 1;
 
 	//Ask planet to update itself
-	for (unsigned int i = 0; i < Planets.size(); i++)
+	for (unsigned int i = 0; i < NUM_PLANETS; i++)
 	{
 		Planets[i].Update();
 	}
@@ -164,10 +167,10 @@ void Display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 1, 0);
+        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
 
     //Ask the planets to draw themselves.
-    for (unsigned int i = 0; i < Planets.size(); i++)
+    for (unsigned int i = 0; i < NUM_PLANETS; i++)
     {
 		Planets[i].Draw(State);
     }
@@ -182,11 +185,11 @@ void Reshape(int width, int height)
     SCREEN_HEIGHT = height; 
 
     glViewport(0, 0, width, height); 
-    double ratio = double(width) / height; 
+    double ratio = double(width) / height;
 
     glMatrixMode(GL_PROJECTION); 
     glLoadIdentity();
-	gluPerspective(60.0, ratio, 0, 100000000);
+	gluPerspective(60.0, ratio, 10, 100000000);
 
     //glMatrixMode(GL_MODELVIEW); 
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
@@ -257,12 +260,14 @@ void Menu(int val)
 	case 16:	//Single Step
 		State.Paused = true;
 		Animate(State.Frame + 1);
-		glutPostRedisplay();
 		break;
 	case 17:	//Quit
 		glutLeaveMainLoop();
 		break;
 	}
+
+	if (State.Paused == true)
+		glutPostRedisplay();
 }
 
 void Keyboard(unsigned char key, int x, int y)
