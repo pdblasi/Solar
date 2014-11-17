@@ -2,6 +2,7 @@
 #include "math.h"
 
 CameraState CamState = CameraState();
+float angle; 
 
 void ZoomIn()
 { 
@@ -24,8 +25,6 @@ void ZoomIn()
         //adjust the camera position
         CamState.Position[i] -= vector[i] * ZOOM_INC;
     }
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-      //  CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1); 
 }
 
 void ZoomOut()
@@ -49,8 +48,6 @@ void ZoomOut()
         //adjust the camera position
         CamState.Position[i] += vector[i] * ZOOM_INC;
     }
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-     //   CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
 }
 
 void RotateUp()
@@ -67,14 +64,10 @@ void RotateUp()
     // finish finding the magnitude
     mag = sqrt(mag);
 
-    float angle = atan(vector[2] / vector[1]); 
-    angle -= VERTICAL_ROTATE_INC; 
+    angle -= VERTICAL_ROTATE_INC;
 
     CamState.Position[1] = CamState.LookAt[1] + mag * sin(angle); 
     CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle); 
-
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-       // CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
 }
 
 void RotateDown()
@@ -91,30 +84,22 @@ void RotateDown()
     // finish finding the magnitude
     mag = sqrt(mag);
 
-    float angle = atan(vector[2] / vector[1]);
-    angle += VERTICAL_ROTATE_INC;
+    angle += VERTICAL_ROTATE_INC; 
 
     CamState.Position[1] = CamState.LookAt[1] + mag * sin(angle);
     CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle);
-
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-      //  CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
 }
 
 void PanLeft()
 {
-	CamState.Position[0] -= HORIZONTAL_PAN_INC;
-	CamState.LookAt[0] -= HORIZONTAL_PAN_INC;
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        //CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
+	CamState.Position[0] += HORIZONTAL_PAN_INC;
+	CamState.LookAt[0] += HORIZONTAL_PAN_INC;
 }
 
 void PanRight()
 {
-	CamState.Position[0] += HORIZONTAL_PAN_INC;
-	CamState.LookAt[0] += HORIZONTAL_PAN_INC;
-    //gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        //CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
+	CamState.Position[0] -= HORIZONTAL_PAN_INC;
+	CamState.LookAt[0] -= HORIZONTAL_PAN_INC;
 }
 
 void PanUp()
