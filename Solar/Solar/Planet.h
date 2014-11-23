@@ -19,7 +19,7 @@ class Planet
 {
 public:
 	Planet();
-	Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], double color[3], Planet* orbiting);
+	Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], float color[4], Planet* orbiting);
 	~Planet();
 
 	void Draw(ProgramState state);
@@ -41,7 +41,7 @@ private:
 	float _orbitAngle, _orbitIncrement;
 	float _position[3], _axis[3];
 
-	double _color[3];
+	float _color[4];
 
 	Planet* _orbiting;
 

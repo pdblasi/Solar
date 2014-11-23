@@ -45,11 +45,9 @@ Planet::Planet()
 
 }
 
-Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], double color[3], Planet* orbiting)
+Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], float color[4], Planet* orbiting)
 {
-	_planet = gluNewQuadric(); 
-	gluQuadricNormals(_planet, GLU_SMOOTH);
-	gluQuadricTexture(_planet, GL_TRUE);
+	_planet = gluNewQuadric();
 
 	_name = name;
 	_radius = radius;
@@ -60,7 +58,7 @@ Planet::Planet(string name, float radius, float orbitDistance, float daysInYear,
 	for (int i = 0; i < 3; i++)
 		_axis[i] = axis[i];
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 		_color[i] = color[i];
 
 	_orbiting = orbiting;
@@ -87,18 +85,18 @@ Planet::~Planet()
 
 void Planet::CreateSolarSystem(Planet solarSystem[])
 {
-	solarSystem[0] = Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
+	solarSystem[0] = Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, NULL);
 
-	solarSystem[1] = Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
-	solarSystem[2] = Planet("Venus", scaleSize(6052), scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
-	solarSystem[3] = Planet("Earth", scaleSize(6378), scaleDist(150), 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
-	solarSystem[4] = Planet("Mars", scaleSize(3394), scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
-	solarSystem[5] = Planet("Jupiter", scaleSize(71398), scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
-	solarSystem[6] = Planet("Saturn", scaleSize(60270), scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
-	solarSystem[7] = Planet("Uranus", scaleSize(25550), scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
-	solarSystem[8] = Planet("Neptune", scaleSize(24750), scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
+	solarSystem[1] = Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new float[]{1.0, 0.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[2] = Planet("Venus", scaleSize(6052), scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[3] = Planet("Earth", scaleSize(6378), scaleDist(150), 365, 24, new float[]{0, 0, 1}, new float[]{0.0, 0.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[4] = Planet("Mars", scaleSize(3394), scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new float[]{1.0, 0.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[5] = Planet("Jupiter", scaleSize(71398), scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[6] = Planet("Saturn", scaleSize(60270), scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 1.0, 1.0}, &solarSystem[0]);
+	solarSystem[7] = Planet("Uranus", scaleSize(25550), scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, &solarSystem[0]);
+	solarSystem[8] = Planet("Neptune", scaleSize(24750), scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, &solarSystem[0]);
 
-	solarSystem[9] = Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new double[]{1, 1, 1}, &solarSystem[3]);
+	solarSystem[9] = Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new float[]{1, 1, 1, 1.0}, &solarSystem[3]);
 }
 
 //vector<Planet> Planet::CreateTrueScaleSolarSystem()
@@ -118,7 +116,6 @@ void Planet::CreateSolarSystem(Planet solarSystem[])
 void Planet::Draw(ProgramState state)
 {
 	//Set up color
-	glColor3dv(_color);
 
 	//Reset transformations
     glPushMatrix();
@@ -137,35 +134,37 @@ void Planet::Draw(ProgramState state)
 	//Rotate along axis by day based increment
 	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
 
+
 	if (state.Texture)
 	{
 		//Draw Textured object
 	}
 	else
 	{
+
 		if (state.Wireframe)
 		{
 			//Enable Wireframe
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glColor4fv(_color);
 			gluQuadricDrawStyle(_planet, GLU_LINE);
+			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		}
 		else
 		{
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
+			gluQuadricDrawStyle(_planet, GLU_FILL);
+
 			if (state.Flat)
 			{
 				//Enable flat shading
-				glEnable(GL_FLAT);
+				gluQuadricNormals(_planet, GLU_FLAT);
 			}
 			else
 			{
 				//Enable smooth shading
-				glEnable(GL_SMOOTH);
+				gluQuadricNormals(_planet, GLU_SMOOTH);
 			}
-
-			//Enable Polygon
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			gluQuadricDrawStyle(_planet, GLU_FILL);
-
 		}
 
 		//Draw Object

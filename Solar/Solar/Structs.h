@@ -12,7 +12,7 @@ struct ProgramState
 	{
 		Wireframe = Flat = true;
 		Texture = Paused = false;
-		Resolution = 15;
+		Resolution = 10;
 		AnimTime = 30;
 		Frame = 1;
 	}
@@ -28,8 +28,8 @@ struct CameraState
 			LookAt[i] = 0;
 
 		Position[0] = 0;
-		Position[2] = 0;
-		Position[1] = -10000000;
+		Position[2] = 1110000;
+		Position[1] = 431000;
 	}
 };
 

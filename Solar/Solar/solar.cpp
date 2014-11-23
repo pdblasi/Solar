@@ -95,8 +95,15 @@ const int NUM_PLANETS = 10;
 //Global Data
 Planet Planets[NUM_PLANETS];
 
-int SCREEN_WIDTH; 
-int SCREEN_HEIGHT;
+int ScreenWidth; 
+int ScreenHeight;
+
+GLfloat LightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
+GLfloat AmbientLight[] = { 0.01, 0.01, 0.01, 1.0 };
+GLfloat PointLight[] = { 1, 1, 1, 1 };
+
+GLfloat ConstAttenuation[] = { 0 };
+GLfloat LinearAttenuation[] = { 1 };
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -111,8 +118,8 @@ int main(int argc, char *argv[])
 {
 	//Init Glut and GL
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glutInitWindowSize(INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Solar System");
@@ -130,6 +137,24 @@ int main(int argc, char *argv[])
 
 	//Create Planets
 	Planet::CreateSolarSystem(Planets);
+
+	//Set up light sources
+	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, PointLight);
+	glLightfv(GL_LIGHT1, GL_CONSTANT_ATTENUATION, ConstAttenuation);
+	glLightfv(GL_LIGHT1, GL_LINEAR_ATTENUATION, LinearAttenuation);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
+	glCullFace(GL_BACK);
 
 	//Start window
 	glutMainLoop();
@@ -162,7 +187,7 @@ void Display()
 	//Set up camera using CamState
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, double(SCREEN_WIDTH/SCREEN_HEIGHT), 0, 100000000);
+    gluPerspective(60.0, double(ScreenWidth/ScreenHeight), 0, 100000000);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -181,8 +206,8 @@ void Display()
 
 void Reshape(int width, int height)
 {
-    SCREEN_WIDTH = width; 
-    SCREEN_HEIGHT = height; 
+    ScreenWidth = width; 
+    ScreenHeight = height; 
 
     glViewport(0, 0, width, height); 
     double ratio = double(width) / height;
