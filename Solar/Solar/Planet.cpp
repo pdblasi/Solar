@@ -162,6 +162,7 @@ void Planet::Draw(ProgramState state)
 		}
 		else
 		{
+			glColor4fv(_color);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
 			glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
 			gluQuadricDrawStyle(_planet, GLU_FILL);
