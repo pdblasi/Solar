@@ -116,6 +116,17 @@ void Planet::CreateSolarSystem(Planet solarSystem[])
 void Planet::Draw(ProgramState state)
 {
 	//Set up color
+    //Draw Orbital Path
+    const float* orbitingPosition = _orbiting == NULL ? new float[]{ 0, 0, 0 } : (*_orbiting).GetPosition();
+    for (int i = 0; i < 360; i++)
+    {
+        float angle = float(i) / 180.0 * M_PI;
+        float y = orbitingPosition[0] + _orbitDistance * cos(angle);
+        float z = orbitingPosition[1] + _orbitDistance * sin(angle);
+        glBegin(GL_POINTS);
+        glVertex3f(y, z, 0);
+        glEnd();
+    }
 
 	//Reset transformations
     glPushMatrix();

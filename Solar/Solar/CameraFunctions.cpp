@@ -126,12 +126,12 @@ void PanRight()
 
 void PanUp()
 {
-	CamState.Position[1] += VERTICAL_PAN_INC;
-	CamState.LookAt[1] += VERTICAL_PAN_INC;
+	CamState.Position[2] += VERTICAL_PAN_INC;
+	CamState.LookAt[2] += VERTICAL_PAN_INC;
 }
 
 void PanDown()
 {
-    CamState.Position[1] -= VERTICAL_PAN_INC;
-    CamState.LookAt[1] -= VERTICAL_PAN_INC;
+    CamState.Position[2] -= VERTICAL_PAN_INC;
+    CamState.LookAt[2] -= VERTICAL_PAN_INC;
 }
