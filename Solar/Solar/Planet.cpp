@@ -128,6 +128,11 @@ void Planet::Draw(ProgramState state)
         glEnd();
     }
 
+    //Draw the Label
+    glRasterPos3f(_position[0], _position[1], _position[2] + 1.5 *_radius); 
+    glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+    glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)_name.c_str());
+
 	//Reset transformations
     glPushMatrix();
 
