@@ -154,6 +154,11 @@ int main(int argc, char *argv[])
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 
+	//Enable coloring
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_DIFFUSE);
+	glColorMaterial(GL_FRONT, GL_AMBIENT);
+
 	glCullFace(GL_BACK);
 
 	//Start window
