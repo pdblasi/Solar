@@ -192,7 +192,8 @@ void Display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 0, 1);
+        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2],
+        CamState.Up[0], CamState.Up[1], CamState.Up[2]);
 
     //Ask the planets to draw themselves.
     for (unsigned int i = 0; i < NUM_PLANETS; i++)
