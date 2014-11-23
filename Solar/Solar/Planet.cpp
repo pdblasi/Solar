@@ -144,6 +144,7 @@ void Planet::Draw(ProgramState state)
 
 		if (state.Wireframe)
 		{
+			glEnable(GL_COLOR_MATERIAL);
 			//Enable Wireframe
 			glColor4fv(_color);
 			gluQuadricDrawStyle(_planet, GLU_LINE);
@@ -151,7 +152,7 @@ void Planet::Draw(ProgramState state)
 		}
 		else
 		{
-			glColor4fv(_color);
+			glDisable(GL_COLOR_MATERIAL);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
 			glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
 			gluQuadricDrawStyle(_planet, GLU_FILL);
