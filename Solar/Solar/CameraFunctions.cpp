@@ -2,7 +2,7 @@
 #include "math.h"
 
 CameraState CamState = CameraState();
-float angle; 
+float angle = M_PI / 2; 
 
 void ZoomIn()
 { 
@@ -64,10 +64,20 @@ void RotateUp()
     // finish finding the magnitude
     mag = sqrt(mag);
 
+    double angle_before = angle;
     angle -= VERTICAL_ROTATE_INC;
+    if (angle < 0)
+    {
+        angle += 2 * M_PI;
+        CamState.Up[2] *= -1;
+    }
+    if (angle_before >= M_PI && angle < M_PI)
+    {
+        CamState.Up[2] *= -1;
+    }
 
-    CamState.Position[1] = CamState.LookAt[1] + mag * sin(angle); 
-    CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle); 
+    CamState.Position[1] = CamState.LookAt[1] + mag * sin(angle);
+    CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle);
 }
 
 void RotateDown()
@@ -83,11 +93,23 @@ void RotateDown()
     }
     // finish finding the magnitude
     mag = sqrt(mag);
-
+ 
+    double angle_before = angle; 
     angle += VERTICAL_ROTATE_INC; 
-
+    if (angle >  2 * M_PI)
+    {
+        angle -=  2 * M_PI;
+        CamState.Up[2] *= -1; 
+    }
+    if (angle_before <= M_PI && angle > M_PI)
+    {
+        CamState.Up[2] *= -1; 
+    }
+    
     CamState.Position[1] = CamState.LookAt[1] + mag * sin(angle);
     CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle);
+
+
 }
 
 void PanLeft()

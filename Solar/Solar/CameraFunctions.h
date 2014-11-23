@@ -14,6 +14,10 @@ const float ZOOM_INC = 100000;
 const float VERTICAL_ROTATE_INC = .01;
 extern float angle; 
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 void ZoomIn();
 void ZoomOut();
 void RotateUp();

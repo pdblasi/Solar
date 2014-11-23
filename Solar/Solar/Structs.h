@@ -20,7 +20,7 @@ struct ProgramState
 
 struct CameraState
 {
-	float Position[3], LookAt[3];
+    float Position[3], LookAt[3], Up[3]; 
 
 	CameraState()
 	{
@@ -30,6 +30,9 @@ struct CameraState
 		Position[0] = 0;
 		Position[2] = 1110000;
 		Position[1] = 431000;
+        Up[0] = 0; 
+        Up[1] = 0; 
+        Up[2] = 1; 
 	}
 };
 
