@@ -102,8 +102,8 @@ GLfloat LightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
 GLfloat AmbientLight[] = { 0.0001, 0.0001, 0.0001, 1.0 };
 GLfloat PointLight[] = { 1, 1, 1, 1 };
 
-GLfloat ConstAttenuation[] = { 1 };
-GLfloat LinearAttenuation[] = { 1/2 };
+GLfloat ConstAttenuation[] = { 0 };
+GLfloat LinearAttenuation[] = { 2217 };
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
-	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 
 	glCullFace(GL_BACK);
