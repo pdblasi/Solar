@@ -2,7 +2,7 @@
 #include "math.h"
 
 CameraState CamState = CameraState();
-float angle = M_PI / 2; 
+float angle = atan(CamState.Position[1]/CamState.Position[2]); 
 
 void ZoomIn()
 { 
@@ -68,7 +68,7 @@ void RotateUp()
     angle -= VERTICAL_ROTATE_INC;
     if (angle < 0)
     {
-        angle += 2 * M_PI;
+        angle += float(2 * M_PI);
         CamState.Up[2] *= -1;
     }
     if (angle_before >= M_PI && angle < M_PI)
@@ -98,7 +98,7 @@ void RotateDown()
     angle += VERTICAL_ROTATE_INC; 
     if (angle >  2 * M_PI)
     {
-        angle -=  2 * M_PI;
+        angle -=  float(2 * M_PI);
         CamState.Up[2] *= -1; 
     }
     if (angle_before <= M_PI && angle > M_PI)
