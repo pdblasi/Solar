@@ -112,28 +112,37 @@ void Planet::CreateSolarSystem(Planet solarSystem[])
 
 void Planet::Draw(ProgramState state)
 {
+	//Set up color
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
+
     //Draw Orbital Path
     const float* orbitingPosition = _orbiting == NULL ? new float[]{ 0, 0, 0 } : (*_orbiting).GetPosition();
+    glBegin(GL_POINTS);
     for (int i = 0; i < 360; i++)
     {
         float angle = float(i) / 180.0 * M_PI;
         float y = orbitingPosition[0] + _orbitDistance * cos(angle);
         float z = orbitingPosition[1] + _orbitDistance * sin(angle);
-        glBegin(GL_POINTS);
         glVertex3f(y, z, 0);
-        glEnd();
     }
+        glEnd();
 
     //Draw the Label
     glRasterPos3f(_position[0], _position[1], _position[2] + 1.5 *_radius); 
     glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)_name.c_str());
 
-	//Reset transformations
-    glPushMatrix();
-
 	//Translate to position
 	glTranslatef(_position[0], _position[1], _position[2]);
+
+	//Rotate to proper axis
+	//glRotatef(_axis[0], 1.0, 0.0, 0.0);
+	//glRotatef(_axis[1], 0.0, 1.0, 0.0);
+	//glRotatef(_axis[2], 0.0, 0.0, 1.0);
+
+	//Rotate to proper vertical orientation
+	//glRotatef(M_PI / 2, 1.0, 0.0, 0.0);
 		
 	//Rotate along axis by day based increment
 	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
@@ -149,17 +158,15 @@ void Planet::Draw(ProgramState state)
 	}
 	else
 	{
-
 		if (state.Wireframe)
 		{
-            //draw the planet in wireframe 
 			glEnable(GL_COLOR_MATERIAL);
+			//Enable Wireframe
 			glColor4fv(_color);
 			gluQuadricDrawStyle(_planet, GLU_LINE);
 		}
 		else
 		{
-            //draw a solit object 
 			glDisable(GL_COLOR_MATERIAL);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
 			glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
