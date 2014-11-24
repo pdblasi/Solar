@@ -66,6 +66,7 @@ Nov 11, 2014  Set up basic data for planet and the constructor. Not yet
 #include <string>
 
 #include "Planet.h"
+#include "Ring.h"
 #include "Structs.h"
 #include "CameraFunctions.h"
 #include "ProgramStateFunctions.h"
@@ -94,6 +95,7 @@ const int NUM_PLANETS = 10;
 
 //Global Data
 Planet Planets[NUM_PLANETS];
+Ring SaturnRing;
 
 int ScreenWidth; 
 int ScreenHeight;
@@ -103,7 +105,7 @@ GLfloat AmbientLight[] = { 0.0001, 0.0001, 0.0001, 1.0 };
 GLfloat PointLight[] = { 1, 1, 1, 1 };
 
 GLfloat ConstAttenuation[] = { 0 };
-GLfloat LinearAttenuation[] = { 2217 };
+GLfloat LinearAttenuation[] = { 1 };
 
 /**************************************************************************//**
 * @author Paul Blasi, Caitlin Taggart
@@ -137,6 +139,7 @@ int main(int argc, char *argv[])
 
 	//Create Planets
 	Planet::CreateSolarSystem(Planets);
+	SaturnRing = Ring("Saturn' Rings", 90000, 140000, 0, 10761, 10.2, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 1.0, 1.0}, &Planets[6]);
 
 	//Set up light sources
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
@@ -148,7 +151,7 @@ int main(int argc, char *argv[])
 	glLightfv(GL_LIGHT1, GL_LINEAR_ATTENUATION, LinearAttenuation);
 
 	glEnable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHT0);
@@ -159,7 +162,7 @@ int main(int argc, char *argv[])
 	glColorMaterial(GL_FRONT, GL_DIFFUSE);
 	glColorMaterial(GL_FRONT, GL_AMBIENT);
 
-	glCullFace(GL_BACK);
+	//glCullFace(GL_BACK);
 
 	//Start window
 	glutMainLoop();
@@ -176,6 +179,8 @@ void Animate(int frame)
 	{
 		Planets[i].Update();
 	}
+
+	SaturnRing.Update();
 
 	if (State.Paused == false)
 	{
@@ -205,6 +210,8 @@ void Display()
     {
 		Planets[i].Draw(State);
     }
+
+	SaturnRing.Draw(State);
 
 
     glutSwapBuffers(); 

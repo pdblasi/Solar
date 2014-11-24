@@ -32,7 +32,7 @@ public:
 	static void CreateSolarSystem(Planet solarSystem[]);
 	//static vector<Planet> CreateTrueScaleSolarSystem();
 
-private:
+protected:
 	string _name;
 	GLUquadricObj* _planet;
 
