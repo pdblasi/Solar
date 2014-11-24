@@ -17,7 +17,7 @@ class TextureMap
 {
 
 public:
-    TextureMap(const char* filename);
+    TextureMap(const char* filename, GLUquadricObj* sphere);
     TextureMap(); 
     ~TextureMap();
     GLUquadricObj* sphere; //the object to draw the texture on

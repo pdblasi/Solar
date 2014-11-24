@@ -87,7 +87,7 @@ Planet::Planet(string name, float radius, float orbitDistance, float daysInYear,
 	_rotationIncrement = (float)(2 * M_PI / _dayRatio);
 
     //set up the texture map for the planet 
-    textureMap = TextureMap((_name + ".bmp").c_str());
+    textureMap = TextureMap((_name + ".bmp").c_str(), _planet);
 }
 
 Planet::~Planet()

@@ -21,6 +21,7 @@ public:
 
 protected:
 	float _outerRadius;
+    TextureMap map; 
 };
 
 #endif

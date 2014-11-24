@@ -10,11 +10,12 @@
 * @param filename - the filename for the bmp file to use for a texture 
 *
 *****************************************************************************/
-TextureMap::TextureMap(const char* filename)
+TextureMap::TextureMap(const char* filename, GLUquadricObj * sph)
 {
     //load the file and record the filename 
     LoadBmpFile(filename, NumRows, NumCols, ImagePtr);
     FileName = filename; 
+    sphere = sph; 
 
     //enable texturing, get a reference to the texture you are making
     glEnable(GL_TEXTURE_2D); 
@@ -29,7 +30,6 @@ TextureMap::TextureMap(const char* filename)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     //create a quadric to draw the texture on
-    sphere = gluNewQuadric();
     gluQuadricDrawStyle(sphere, GLU_FILL);
     gluQuadricNormals(sphere, GLU_SMOOTH);
     gluQuadricTexture(sphere, GL_TRUE);

@@ -38,6 +38,8 @@ Ring::Ring(string name, float innerRadius, float outerRadius, float orbitDistanc
 	_orbitAngle = _dayAngle = 0;
 	_orbitIncrement = (float)(2 * M_PI / _daysInYear);
 	_rotationIncrement = (float)(2 * M_PI / _dayRatio);
+
+    map = TextureMap("SaturnRings.bmp ", _planet); 
 }
 
 Ring::~Ring()
@@ -84,6 +86,11 @@ void Ring::Draw(ProgramState state)
 	if (state.Texture)
 	{
 		//Draw Textured object
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+        glBindTexture(GL_TEXTURE_2D, map.Texture);
+        gluSphere(_planet, _radius, 100, 100);
+        glDisable(GL_TEXTURE_2D);
 	}
 	else
 	{
