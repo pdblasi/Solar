@@ -69,6 +69,7 @@
     <ClCompile Include="ProgramStateFunctions.cpp" />
     <ClCompile Include="Ring.cpp" />
     <ClCompile Include="solar.cpp" />
+    <ClCompile Include="TextureMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFunctions.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="ProgramStateFunctions.h" />
     <ClInclude Include="Ring.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="TextureMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

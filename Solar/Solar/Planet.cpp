@@ -48,20 +48,25 @@ Planet::Planet()
 
 Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], float color[4], Planet* orbiting)
 {
+    //create a new quadric object 
 	_planet = gluNewQuadric();
 
+    //set the passed in parameters 
 	_name = name;
 	_radius = radius;
 	_orbitDistance = orbitDistance;
 	_daysInYear = daysInYear;
 	_dayRatio = dayRatio;
 
+    //set the axis it turns on 
 	for (int i = 0; i < 3; i++)
 		_axis[i] = axis[i];
 
+    //set the color of the object 
 	for (int i = 0; i < 4; i++)
 		_color[i] = color[i];
 
+    //set what planet it is orbiting and its position based upon that.
 	_orbiting = orbiting;
 	if (_orbiting == NULL)
 	{
@@ -75,9 +80,14 @@ Planet::Planet(string name, float radius, float orbitDistance, float daysInYear,
 		_position[2] = 0;
 	}
 
+    //set the initial angles 
 	_orbitAngle = _dayAngle = 0; 
+    //set the angle it travels per day 
 	_orbitIncrement = (float)(2 * M_PI / _daysInYear);
 	_rotationIncrement = (float)(2 * M_PI / _dayRatio);
+
+    //set up the texture map for the planet 
+    textureMap = TextureMap((_name + ".bmp").c_str());
 }
 
 Planet::~Planet()
@@ -86,6 +96,7 @@ Planet::~Planet()
 
 void Planet::CreateSolarSystem(Planet solarSystem[])
 {
+    //create the solor system objects 
 	solarSystem[0] = Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, NULL);
 
 	solarSystem[1] = Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new float[]{1.0, 0.0, 0.0, 1.0}, &solarSystem[0]);
@@ -100,25 +111,8 @@ void Planet::CreateSolarSystem(Planet solarSystem[])
 	solarSystem[9] = Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new float[]{1, 1, 1, 1.0}, &solarSystem[3]);
 }
 
-//vector<Planet> Planet::CreateTrueScaleSolarSystem()
-//{
-//	solarSystem[0] = Planet("Sun", 696000, 0, 0, 25, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, NULL);
-//
-//	solarSystem[1] = Planet("Mercury", 2439, 580000, 88, 1416, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 0.0}, &solarSystem[0]);
-//	solarSystem[2] = Planet("Venus", 6052, 1080000, 225, 5832, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 0.0}, &solarSystem[0]);
-//	solarSystem[3] = Planet("Earth", 6378, 1500000, 365, 24, new float[]{0, 0, 1}, new double[]{0.0, 0.0, 1.0}, &solarSystem[0]);
-//	solarSystem[4] = Planet("Mars", 3394, 2280000, 687, 24.6, new float[]{0, 0, 1}, new double[]{1.0, 0.0, 1.0}, &solarSystem[0]);
-//	solarSystem[5] = Planet("Jupiter", 71398, 7790000, 4332, 9.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 1.0}, &solarSystem[0]);
-//	solarSystem[6] = Planet("Saturn", 60270, 14240000, 10761, 10.2, new float[]{0, 0, 1}, new double[]{0.0, 1.0, 1.0}, &solarSystem[0]);
-//	solarSystem[7] = Planet("Uranus", 25550, 28670000, 30682, 15.5, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
-//	solarSystem[8] = Planet("Neptune", 24750, 44920000, 60195, 15.8, new float[]{0, 0, 1}, new double[]{1.0, 1.0, 0.0}, &solarSystem[0]);
-//}
-
 void Planet::Draw(ProgramState state)
 {
-	//Reset transformations
-    glPushMatrix();
-
 	//Set up color
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
@@ -133,7 +127,10 @@ void Planet::Draw(ProgramState state)
         float z = orbitingPosition[1] + _orbitDistance * sin(angle);
         glVertex3f(y, z, 0);
     }
-    glEnd();
+        glEnd();
+
+    //Reset transformations
+    glPushMatrix();
 
     //Draw the Label
     glRasterPos3f(_position[0], _position[1], _position[2] + 1.5 *_radius); 
@@ -143,27 +140,33 @@ void Planet::Draw(ProgramState state)
 	//Translate to position
 	glTranslatef(_position[0], _position[1], _position[2]);
 
-	//Rotate to proper axis
-	//glRotatef(_axis[0], 1.0, 0.0, 0.0);
-	//glRotatef(_axis[1], 0.0, 1.0, 0.0);
-	//glRotatef(_axis[2], 0.0, 0.0, 1.0);
-
+		
 	//Rotate along axis by day based increment
 	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
 
 	if (state.Texture)
 	{
-		//Draw Textured object
+        //draw the planet using the texture map for the planet 
+        glEnable(GL_TEXTURE_2D); 
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+        glBindTexture(GL_TEXTURE_2D, textureMap.Texture);
+        gluSphere(textureMap.sphere, _radius, 100, 100);
+        glDisable(GL_TEXTURE_2D); 
 	}
 	else
 	{
 		if (state.Wireframe)
 		{
+			glEnable(GL_COLOR_MATERIAL);
 			//Enable Wireframe
+			glColor4fv(_color);
 			gluQuadricDrawStyle(_planet, GLU_LINE);
 		}
 		else
 		{
+			glDisable(GL_COLOR_MATERIAL);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, _color);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
 			gluQuadricDrawStyle(_planet, GLU_FILL);
 
 			if (state.Flat)
@@ -182,37 +185,46 @@ void Planet::Draw(ProgramState state)
 		gluSphere(_planet, _radius, state.Resolution, state.Resolution);
 	}
 
+    //reset the matric 
     glPopMatrix();
 }
 
 void Planet::Update()
 {
-	_dayAngle = _dayAngle + _rotationIncrement;// (float)(2 * M_PI);
+    //increment the amount the planet is rotated after a day 
+	_dayAngle = _dayAngle + _rotationIncrement;
 
+    //if it is the sun do not continue 
 	if (_orbiting == NULL)
 	{
 		return;
 	}
 
+    //move the planet along its orbit path 
 	_orbitAngle = fmodf(_orbitAngle + _orbitIncrement, (float)(2 * M_PI));
 
+    //the position of the planet this planet is orbitting 
 	const float* orbitingPosition = (*_orbiting).GetPosition();
 
+    //update the position based upon the orbit angle 
 	_position[0] = orbitingPosition[0] + _orbitDistance * cos(_orbitAngle);
 	_position[1] = orbitingPosition[1] + _orbitDistance * sin(_orbitAngle);
 }
 
 const float* Planet::GetPosition()
 {
+    //returns the position of this planet 
 	return _position;
 }
 
 float Planet::GetRadius()
 {
+    //returns the radius of this planet 
 	return _radius;
 }
 
 string Planet::GetName()
 {
+    //returns the name of this planet 
 	return _name;
 }
