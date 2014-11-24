@@ -128,6 +128,9 @@ void Planet::Draw(ProgramState state)
     }
         glEnd();
 
+    //Reset transformations
+    glPushMatrix();
+
     //Draw the Label
     glRasterPos3f(_position[0], _position[1], _position[2] + 1.5 *_radius); 
     glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
@@ -136,13 +139,6 @@ void Planet::Draw(ProgramState state)
 	//Translate to position
 	glTranslatef(_position[0], _position[1], _position[2]);
 
-	//Rotate to proper axis
-	//glRotatef(_axis[0], 1.0, 0.0, 0.0);
-	//glRotatef(_axis[1], 0.0, 1.0, 0.0);
-	//glRotatef(_axis[2], 0.0, 0.0, 1.0);
-
-	//Rotate to proper vertical orientation
-	//glRotatef(M_PI / 2, 1.0, 0.0, 0.0);
 		
 	//Rotate along axis by day based increment
 	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
