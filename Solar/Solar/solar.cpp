@@ -111,7 +111,8 @@ GLfloat LinearAttenuation[] = { 1 };
 * @author Paul Blasi, Caitlin Taggart
 *
 * @par Description:
-* Main execution point of the app. Initializes the windows.
+* Main execution point of the app. Initializes the windows. Creates the planets
+* Sets up the lighting. Enters the main loop. 
 *
 * @returns Execution outcome.
 *
@@ -171,6 +172,16 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+/**************************************************************************//**
+* @author Paul Blasi, Caitlin Taggart
+*
+* @par Description:
+* Updates the placement of the of the planet and the day placement of the planet 
+* also calls the animate function again. 
+*
+* @param frame - the frame that we are on
+*
+*****************************************************************************/
 void Animate(int frame)
 {
 	State.Frame = frame + 1;
@@ -192,6 +203,14 @@ void Animate(int frame)
 	glutPostRedisplay();
 }
 
+/**************************************************************************//**
+* @author Paul Blasi, Caitlin Taggart
+*
+* @par Description:
+* The display function for the planet. Updates the perspective, the place
+* the user is looking at and draws the planets.
+*
+*****************************************************************************/
 void Display()
 {
     //clear the screen. 
@@ -221,6 +240,17 @@ void Display()
     glutSwapBuffers(); 
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* @par Description:
+* Callback function for the reshape in OpenGL. Stores the width and height, 
+* sets the viewport and sets the perspective (including the gluLookAt). 
+* 
+* @param width - the width of the screen in pixels 
+* @param height - the height of the screen in pixels 
+*
+*****************************************************************************/
 void Reshape(int width, int height)
 {
     //find the screen dimensions
@@ -240,6 +270,15 @@ void Reshape(int width, int height)
         CamState.Up[0], CamState.Up[1], CamState.Up[2]);
 }
 
+
+/**************************************************************************//**
+* @author Paul Blasi
+*
+* @par Description:
+* Menu callback function. Calls the appropriate function for that menu option. 
+*
+* @param val - the menu item that has been called.  
+*****************************************************************************/
 void Menu(int val)
 {
 	switch (val)
@@ -309,6 +348,18 @@ void Menu(int val)
 		glutPostRedisplay();
 }
 
+/**************************************************************************//**
+* @author Paul Blasi
+*
+* @par Description:
+* Keyboard callback function. Calls the Menu function for the appropriate 
+* menu option. 
+*
+* @param key - the key that was pressed
+* @param x - the x position of the mouse when the key was pressed
+* @param y - the y position of the mouse when the key was pressed
+*
+*****************************************************************************/
 void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -366,6 +417,18 @@ void Keyboard(unsigned char key, int x, int y)
 	}
 }
 
+/**************************************************************************//**
+* @author Paul Blasi
+*
+* @par Description:
+* Special keys keyboard callback function. Calls the Menu function for the 
+* appropriate menu option.
+*
+* @param key - the key that was pressed
+* @param x - the x position of the mouse when the key was pressed
+* @param y - the y position of the mouse when the key was pressed
+*
+*****************************************************************************/
 void SpecialKeys(int key, int x, int y)
 {
 	switch (key)
@@ -385,6 +448,14 @@ void SpecialKeys(int key, int x, int y)
 	}
 }
 
+/**************************************************************************//**
+* @author Paul Blasi
+*
+* @par Description:
+* Creates the menu items for the menu in OpenGL, and attaches it to the right
+* mouse button. 
+*
+*****************************************************************************/
 void CreateClickMenu()
 {
     //create the menu

@@ -1,6 +1,15 @@
 #include "TextureMap.h"
 
-
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* @par Description:
+* Texture Map constructor loads a bmp file from the filename passed in and
+* then creates the texture map and the quadric to draw the texture map on. 
+*
+* @param filename - the filename for the bmp file to use for a texture 
+*
+*****************************************************************************/
 TextureMap::TextureMap(const char* filename)
 {
     //load the file and record the filename 
@@ -26,16 +35,36 @@ TextureMap::TextureMap(const char* filename)
     gluQuadricTexture(sphere, GL_TRUE);
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* @par Description:
+* An empty constructor for the texture map 
+*
+*****************************************************************************/
 TextureMap::TextureMap()
 {
 
 }
 
-
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* @par Description:
+* The destructor for the texture map class 
+*
+*****************************************************************************/
 TextureMap::~TextureMap()
 {
 }
 
+/**************************************************************************//**
+* @author John Weiss 
+*
+* @par Description:Code to read in a BMP image file.
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+*
+*****************************************************************************/
 bool TextureMap::LoadBmpFile(const char* filename, int &NumRows, int &NumCols, unsigned char* &ImagePtr)
 {
     FILE* infile; 
@@ -118,14 +147,27 @@ bool TextureMap::LoadBmpFile(const char* filename, int &NumRows, int &NumCols, u
     return true;
 }
 
+/**************************************************************************//**
+* @author John Weiss
+*
+* Description: Gets the number of bytes per row in the image based on the number
+* of colums in the image
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+*
+*****************************************************************************/
 // Rows are word aligned
 inline int TextureMap::GetNumBytesPerRow(int NumCols)
 {
     return ((3 * NumCols + 3) >> 2) << 2;
 }
 
-
-// read a 16-bit integer from the input file
+/**************************************************************************//**
+* @author John Weiss
+*
+* Description: Reads a 16 bit integer from the input file 
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+*
+*****************************************************************************/
 short TextureMap::readShort(FILE* infile)
 {
     unsigned char lowByte, hiByte;
@@ -139,7 +181,13 @@ short TextureMap::readShort(FILE* infile)
     return ret;
 }
 
-// read a 32-bit integer from the input file
+/**************************************************************************//**
+* @author John Weiss
+*
+* Description: Reads a 32 bit integer from the input file 
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+*
+*****************************************************************************/
 int TextureMap::readLong(FILE* infile)
 {
     unsigned char byte0, byte1, byte2, byte3;
@@ -159,7 +207,13 @@ int TextureMap::readLong(FILE* infile)
     return ret;
 }
 
-// skip over given number of bytes in input file
+/**************************************************************************//**
+* @author John Weiss
+*
+* Description: Skips over a given number of byes in the input file 
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+*
+*****************************************************************************/
 void TextureMap::skipChars(FILE* infile, int numChars)
 {
     for (int i = 0; i < numChars; i++)

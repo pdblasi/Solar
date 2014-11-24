@@ -5,6 +5,14 @@
 CameraState CamState = CameraState();
 float angle = atan(CamState.Position[1]/CamState.Position[2]); //the angle the camera is at 
 
+
+/**************************************************************************//**
+* @author Caitlin Taggart 
+* 
+* Description: Zooms the user in along the vector of their sight by using 
+* the camer position and position they are looking at. 
+*
+*****************************************************************************/
 void ZoomIn()
 { 
     float vector[3];
@@ -28,6 +36,13 @@ void ZoomIn()
     }
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Zooms the user out along the vector of their sight by using
+* the camer position and position they are looking at.
+*
+*****************************************************************************/
 void ZoomOut()
 {
     float vector[3];
@@ -51,6 +66,13 @@ void ZoomOut()
     }
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Rotates the camera position up on the y - axis of the object the 
+* camera is looking at 
+*
+*****************************************************************************/
 void RotateUp()
 {
     float vector[3];
@@ -83,6 +105,14 @@ void RotateUp()
     CamState.Position[2] = CamState.LookAt[2] + mag * cos(angle);
 }
 
+
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Rotates the camera position down on the y - axis of the object the
+* camera is looking at
+*
+*****************************************************************************/
 void RotateDown()
 {
     float vector[3];
@@ -117,6 +147,13 @@ void RotateDown()
 
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Pans the camera left by moving the position the camera is
+* looking at and the camera position. 
+*
+*****************************************************************************/
 void PanLeft()
 {
     //move what you are looking at and the position of your camera
@@ -124,6 +161,13 @@ void PanLeft()
 	CamState.LookAt[0] += HORIZONTAL_PAN_INC;
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Pans the camera right by moving the position the camera is
+* looking at and the camera position.
+*
+*****************************************************************************/
 void PanRight()
 {
     //move what you are looking at and the position of your camera
@@ -131,6 +175,13 @@ void PanRight()
 	CamState.LookAt[0] -= HORIZONTAL_PAN_INC;
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Pans the camera up by moving the position the camera is
+* looking at and the camera position.
+*
+*****************************************************************************/
 void PanUp()
 {
     //move what you are looking at and the position of your camera
@@ -138,6 +189,13 @@ void PanUp()
 	CamState.LookAt[2] += VERTICAL_PAN_INC;
 }
 
+/**************************************************************************//**
+* @author Caitlin Taggart
+*
+* Description: Pans the camera down by moving the position the camera is
+* looking at and the camera position.
+*
+*****************************************************************************/
 void PanDown()
 {
     //move what you are looking at and the position of your camera
