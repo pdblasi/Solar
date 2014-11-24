@@ -150,7 +150,7 @@ void Planet::Draw(ProgramState state)
         glEnable(GL_TEXTURE_2D); 
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
         glBindTexture(GL_TEXTURE_2D, textureMap.Texture);
-        gluSphere(textureMap.sphere, _radius, 100, 100);
+        gluSphere(_planet, _radius, 100, 100);
         glDisable(GL_TEXTURE_2D); 
 	}
 	else

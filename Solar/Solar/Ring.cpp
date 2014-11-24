@@ -89,7 +89,7 @@ void Ring::Draw(ProgramState state)
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
         glBindTexture(GL_TEXTURE_2D, map.Texture);
-        gluSphere(_planet, _radius, 100, 100);
+        gluCylinder(_planet, _radius, _outerRadius, 0, 30, 30); 
         glDisable(GL_TEXTURE_2D);
 	}
 	else
