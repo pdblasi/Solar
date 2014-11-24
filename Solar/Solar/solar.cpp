@@ -77,7 +77,6 @@ void Display();
 void Reshape(int width, int height);
 void Keyboard(unsigned char key, int x, int y);
 void SpecialKeys(int key, int x, int y);
-void Mouse(int button, int state, int x, int y);
 void Menu(int val);
 void Animate(int frame);
 
@@ -98,6 +97,7 @@ Planet Planets[NUM_PLANETS];
 int ScreenWidth; 
 int ScreenHeight;
 
+//light settings
 GLfloat LightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
 GLfloat AmbientLight[] = { 0.0001, 0.0001, 0.0001, 1.0 };
 GLfloat PointLight[] = { 1, 1, 1, 1 };
@@ -119,6 +119,8 @@ int main(int argc, char *argv[])
 	//Init Glut and GL
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glEnable(GL_TEXTURE_GEN_S);
+    glEnable(GL_TEXTURE_GEN_T);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glutInitWindowSize(INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 	glutInitWindowPosition(100, 100);
@@ -129,7 +131,6 @@ int main(int argc, char *argv[])
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
-	glutMouseFunc(Mouse);
 	glutTimerFunc(State.AnimTime, Animate, State.Frame);
 
 	//Create Menu
@@ -172,6 +173,7 @@ void Animate(int frame)
 		Planets[i].Update();
 	}
 
+    //If not paused then call the animate function again. 
 	if (State.Paused == false)
 	{
 		glutTimerFunc(State.AnimTime, Animate, State.Frame);
@@ -182,6 +184,7 @@ void Animate(int frame)
 
 void Display()
 {
+    //clear the screen. 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Set up camera using CamState
@@ -189,6 +192,7 @@ void Display()
     glLoadIdentity();
     gluPerspective(60.0, double(ScreenWidth/ScreenHeight), 1, 100000000);
 
+    //set what we are looking at 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
@@ -201,30 +205,26 @@ void Display()
 		Planets[i].Draw(State);
     }
 
-
     glutSwapBuffers(); 
 }
 
 void Reshape(int width, int height)
 {
+    //find the screen dimensions
     ScreenWidth = width; 
     ScreenHeight = height; 
 
+    //set up the viewport 
     glViewport(0, 0, width, height); 
     double ratio = double(width) / height;
 
+    //set up the perspective 
     glMatrixMode(GL_PROJECTION); 
     glLoadIdentity();
-	gluPerspective(60.0, ratio, 10, 100000000);
-
-    //glMatrixMode(GL_MODELVIEW); 
+	gluPerspective(60.0, ratio, 10, 100000000); 
     gluLookAt(CamState.Position[0], CamState.Position[1], CamState.Position[2],
-        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 0, 1, 0);
-}
-
-void Mouse(int button, int state, int x, int y)
-{
-
+        CamState.LookAt[0], CamState.LookAt[1], CamState.LookAt[2], 
+        CamState.Up[0], CamState.Up[1], CamState.Up[2]);
 }
 
 void Menu(int val)
@@ -301,54 +301,54 @@ void Keyboard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'p':
-		Menu(0);
+		Menu(0); //Toggle Wireframe/Polygon Rendering
 		break;
 	case 'f':
-		Menu(1);
+		Menu(1); //Toggle Flat/Smooth Shading
 		break;
 	case 't':
-		Menu(2);
+		Menu(2); //Toggle Texture Mapping 
 		break;
 	case '+':
 	case 'Z':
-		Menu(3);
+		Menu(3); //Zoom In
 		break;
 	case '-':
 	case 'z':
-		Menu(4);
+		Menu(4); //Zoom Out
 		break;
 	case 'x':
-		Menu(7);
+		Menu(7); //Pan Left 
 		break;
 	case 'X':
-		Menu(8);
+		Menu(8); //Pan Right 
 		break;
 	case 'Y':
-		Menu(9);
+		Menu(9); //Pan Up
 		break;
 	case 'y':
-		Menu(10);
+		Menu(10); //Pan Down 
 		break;
 	case 'N':
-		Menu(11);
+		Menu(11); //Increase wireframe resolution
 		break;
 	case 'n':
-		Menu(12);
+		Menu(12); //Decrease wireframe resolution 
 		break;
 	case 'A':
-		Menu(13);
+		Menu(13); //Speed Up simulation 
 		break;
 	case 'a':
-		Menu(14);
+		Menu(14); //Slow down simulation
 		break;
-	case 'r':
-		Menu(15);
+	case 'r': 
+		Menu(15); //Suspend/Resume Animation
 		break;
-	case 's':
+	case 's':       //Single Step 
 		Menu(16);
 		break;
 	case ESCAPE_KEY:
-		Menu(17);
+		Menu(17);   //exit program 
 		break;
 	}
 }
@@ -358,22 +358,23 @@ void SpecialKeys(int key, int x, int y)
 	switch (key)
 	{
 	case GLUT_KEY_UP:
-		Menu(5);
+		Menu(5);    //rotate up 
 		break;
 	case GLUT_KEY_DOWN:
-		Menu(6);
+		Menu(6);    //rotate down 
 		break;
 	case GLUT_KEY_LEFT:
-		Menu(7);
+		Menu(7);    //pan left 
 		break;
 	case GLUT_KEY_RIGHT:
-		Menu(8);
+		Menu(8);    //pan right 
 		break;
 	}
 }
 
 void CreateClickMenu()
 {
+    //create the menu
 	glutCreateMenu(Menu);
 	glutAddMenuEntry("Solar System Simulator (PB & CT Nov 2014)", -1);
 	glutAddMenuEntry("=========================================", -1);

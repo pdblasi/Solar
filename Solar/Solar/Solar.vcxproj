@@ -68,12 +68,14 @@
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="ProgramStateFunctions.cpp" />
     <ClCompile Include="solar.cpp" />
+    <ClCompile Include="TextureMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFunctions.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="ProgramStateFunctions.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="TextureMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
