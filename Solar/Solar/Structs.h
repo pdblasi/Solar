@@ -18,11 +18,27 @@ struct ProgramState
 	}
 };
 
+
+/**************************************************************************//**
+* @author Caitlin Taggart and Paul Blasi 
+*
+* Description: Structure that stores the camera state - position, look at, and 
+* up vector. 
+*
+*****************************************************************************/
 struct CameraState
 {
     //the position of the camera, what the camera is looking at, and what direction is up 
     float Position[3], LookAt[3], Up[3]; 
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart 
+*
+* Description: Constructor for the Camera State structure. Initializes the 
+* position the "camera" is looking at and the position of the "camera" and 
+* the up direction for the camera. 
+*
+*****************************************************************************/
 	CameraState()
 	{
         //star looking at the sun 

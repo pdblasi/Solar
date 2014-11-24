@@ -20,8 +20,10 @@ public:
     TextureMap(const char* filename, GLUquadricObj* sphere);
     TextureMap(); 
     ~TextureMap();
-    GLUquadricObj* sphere; //the object to draw the texture on
-    unsigned int Texture; //id of the texture 
+    /*!
+    * @brief the id of the texture drawn 
+    */
+    unsigned int Texture;
 
 private:
     bool LoadBmpFile(const char* filename, int &NumRows, int &NumCols, unsigned char* &ImagePtr);
@@ -30,9 +32,25 @@ private:
     static void skipChars(FILE* infile, int numChars);
     static inline int GetNumBytesPerRow(int NumCols);
 
-    unsigned char* ImagePtr; //the image 
-    const char* FileName; //the filename of the image 
-    int NumCols;    //number of columns in the image 
-    int NumRows;    //number of rows in the image 
+    /*!
+    * @brief A pointer to the image
+    */
+    unsigned char* ImagePtr;
+    /*!
+    * @brief the filename of the image 
+    */
+    const char* FileName; 
+    /*!
+    * @brief the number of columns in the image 
+    */
+    int NumCols;  
+    /*!
+    * @brief the number of rowns in the image 
+    */
+    int NumRows;   
+    /*!
+    * @brief the object to draw the texture on 
+    */
+    GLUquadricObj* sphere; //the object to draw the texture on
 };
 
