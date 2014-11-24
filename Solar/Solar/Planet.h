@@ -35,13 +35,13 @@ public:
     //creates the solar system 
 	static void CreateSolarSystem(Planet solarSystem[]);
 
-private:
+protected:
 	string _name; //name of the planet 
 	GLUquadricObj* _planet; //object used to draw spheres
-    TextureMap textureMap; //texture map for the class 
+	TextureMap textureMap; //texture map for the class 
 
     //planet parameters
-	float _radius, _orbitDistance, _daysInYear, _dayRatio; 
+	float _radius, _orbitDistance, _daysInYear, _dayRatio;
 	float _dayAngle, _rotationIncrement;
 	float _orbitAngle, _orbitIncrement;
 	float _position[3], _axis[3];

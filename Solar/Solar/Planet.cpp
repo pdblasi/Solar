@@ -1,4 +1,5 @@
 #include "Planet.h"
+#include "Ring.h"
 
 float Planet::scaleDist(float dist)
 {
