@@ -1,13 +1,58 @@
 #ifndef __STRUCTS_H__
 #define __STRUCTS_H__
 
+
+/**************************************************************************//**
+* @author Paul Blasi
+*
+* Description: Handles the program state. Including whethere wireframe or 
+* solid objects are used, whether flat or smooth shading is used, if texture 
+* mapping is on or off, and if the program is paused (taking single steps) or 
+* animating. This also includes the resolution of the wireframe models, and 
+* the time between animations (since this can change if the user speeds up, or 
+* slows down the animation). Also determines what frame the user is on.
+*
+*****************************************************************************/
 struct ProgramState
 {
-	bool Wireframe, Flat, Texture, Paused;
+    /*!
+    * @brief wireframe or solid object should be used 
+    */
+    bool Wireframe;
+    /*!
+    * @brief whether flat or smooth shading should be used 
+    */
+    bool Flat;
+    /*!
+    * @brief flag for if texture mapping is on or off 
+    */
+    bool Texture;
+    /*!
+    * @brief determines if the program is paused or not 
+    */
+    bool Paused;
+    /*!
+    * @brief determines the resolution of the wireframe
+    */
 	int Resolution; 
+    /*!
+    * @brief determins the amount of time between animation and updates 
+    */
 	unsigned int AnimTime;
+    /*!
+    * @brief what frame the program is currently on
+    */
 	int Frame;
 
+    /**************************************************************************//**
+    * @author Paul Blasi
+    *
+    * Description: Initializes the program state to have wireframe models of the 
+    * spheres and flat shading. Also the program starts with texture off and not
+    * paused. The animation time starts at one frame every 30 miliseconds, and 
+    * starts on frame 1. 
+    *
+    *****************************************************************************/
 	ProgramState()
 	{
 		Wireframe = Flat = true;
@@ -28,8 +73,18 @@ struct ProgramState
 *****************************************************************************/
 struct CameraState
 {
-    //the position of the camera, what the camera is looking at, and what direction is up 
-    float Position[3], LookAt[3], Up[3]; 
+    /*!
+    * @brief the position of the camera 
+    */
+    float Position[3];
+    /*!
+    * @brief the position the camera is looking at 
+    */
+    float LookAt[3];
+    /*!
+    * @brief the direction of up
+    */
+    float Up[3];
 
 /**************************************************************************//**
 * @author Paul Blasi and Caitlin Taggart 

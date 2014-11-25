@@ -1,8 +1,20 @@
+/************************************************************************//**
+*  @file
+*
+*  @brief This file contains the Camera State implemations code. The state 
+*   changes include Zoom In, Zoom Out, Rotate Up, Rotate Down, Pan Up, Pan 
+*   Down, Pan left, and Pan Right.
+***************************************************************************/
 #include "CameraFunctions.h"
 #include "math.h"
 
-//global parameters  
+/*!
+*  @brief The camera state for the program
+*/
 CameraState CamState = CameraState();
+/*!
+*  @brief The angle that the camera is looking in the xz-plane.
+*/
 float angle = atan(CamState.Position[1]/CamState.Position[2]); //the angle the camera is at 
 
 

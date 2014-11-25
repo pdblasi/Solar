@@ -1,3 +1,13 @@
+/************************************************************************//**
+*  @file
+*
+*  @brief Class interpretation of the Read BMP file from Dr. John Weiss's
+* example. Takes a filename and an object, and sets up a texture map for 
+* that object using the picture in the file. 
+*
+* Ref: based on code from RgbImage.cc (Buss, 3-D Computer Graphics, 2003).
+***************************************************************************/
+
 #include "TextureMap.h"
 
 /**************************************************************************//**

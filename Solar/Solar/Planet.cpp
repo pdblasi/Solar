@@ -1,6 +1,28 @@
+/************************************************************************//**
+*  @file
+*
+*  @brief The planet class implementation. The planet class takes care of 
+*   keeping the planet state, updates the planet as necessary, and draws the 
+*   planet as necessary. 
+***************************************************************************/
+
+//includes 
 #include "Planet.h"
 #include "Ring.h"
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: scales the distance between the planets, so that planets are 
+* not (extremely) far away from each other
+* 
+* @param dist - the distance between the planet it is orbiting and the planet 
+*   itself 
+* 
+* @return the new distance between the planet it is orbiting and the planet
+*   itself 
+*
+*****************************************************************************/
 float Planet::scaleDist(float dist)
 {
 	//Moons and rings
@@ -17,6 +39,15 @@ float Planet::scaleDist(float dist)
 	}
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: scales the size of the planet to not be too big or too small 
+* 
+* @param size - the radius of the planet 
+* @return the new radius of the planet 
+*
+*****************************************************************************/
 float Planet::scaleSize(float size)
 {
 	//Inner planets and moons
@@ -41,11 +72,27 @@ float Planet::scaleSize(float size)
 	}
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: the empty constructor for the planet class 
+*
+*****************************************************************************/
 Planet::Planet()
 {
 
 }
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart 
+*
+* Description: the constructor for the planet class. Initializes the quadric 
+* used to draw the planet, the name, radius, orbit distance, day in year, earth
+* days in day the axis the planet turns on, the color of the planet, the planet 
+* it is orbiting, the initial position of the planet, and the texture map for
+* the planet. 
+*
+*****************************************************************************/
 Planet::Planet(string name, float radius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], float color[4], Planet* orbiting)
 {
     //create a new quadric object 
@@ -90,10 +137,25 @@ Planet::Planet(string name, float radius, float orbitDistance, float daysInYear,
     textureMap = TextureMap((_name + ".bmp").c_str(), _planet);
 }
 
+
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: the destructor for the planet class 
+*
+*****************************************************************************/
 Planet::~Planet()
 {
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: creates the planets in the solar system
+* 
+* @param solarSystem - the list of planets in the solar system 
+*
+*****************************************************************************/
 void Planet::CreateSolarSystem(Planet solarSystem[])
 {
     //create the solor system objects 
@@ -111,6 +173,17 @@ void Planet::CreateSolarSystem(Planet solarSystem[])
 	solarSystem[9] = Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new float[]{1, 1, 1, 1.0}, &solarSystem[3]);
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: Draws the planet in the given state by setting up the material
+* properties, drawing the orbital path drawing the label, rotating as needed 
+* for the day, and drawing the planet in the given state (wireframe or not, 
+* smooth or flat shading, texture mapping or not). 
+* 
+* @param state - the state of the program to draw the planet in 
+*
+*****************************************************************************/
 void Planet::Draw(ProgramState state)
 {
 	//Set up color
@@ -189,6 +262,14 @@ void Planet::Draw(ProgramState state)
     glPopMatrix();
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: updates the position of the planet including the position 
+* around the planet it is orbiting, and amount it is tilted according to its
+* day. 
+*
+*****************************************************************************/
 void Planet::Update()
 {
     //increment the amount the planet is rotated after a day 
@@ -211,18 +292,42 @@ void Planet::Update()
 	_position[1] = orbitingPosition[1] + _orbitDistance * sin(_orbitAngle);
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: Returns the current position of the planet
+* 
+* @return the (x, y, z) coordinate of position of the planet 
+*
+*****************************************************************************/
 const float* Planet::GetPosition()
 {
     //returns the position of this planet 
 	return _position;
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: Getter for the radius of the planet 
+* 
+* @return the radius of the planet 
+*
+*****************************************************************************/
 float Planet::GetRadius()
 {
     //returns the radius of this planet 
 	return _radius;
 }
 
+/**************************************************************************//**
+* @author Paul Blasi 
+*
+* Description: Getter for the name of the planet 
+* 
+* @return the name of the planet  
+*
+*****************************************************************************/
 string Planet::GetName()
 {
     //returns the name of this planet 

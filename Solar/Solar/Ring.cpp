@@ -1,9 +1,35 @@
+/************************************************************************//**
+*  @file
+*
+*  @brief This file contains the implementation for the ring class. 
+*   The ring class is used to draw Saturn's rings, but uses much of the same
+*   information that the planet class uses, which is why it is subclassed. 
+*   The main difference between the ring class and the planet class is that 
+*   the gluCylinder is used instead of a gluSphere. 
+***************************************************************************/
+
 #include "Ring.h"
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart 
+*
+* Description: the default constructor for the ring class 
+*
+*****************************************************************************/
 Ring::Ring()
 {
 }
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart 
+*
+* Description: the constructor for the ring class. Initializes the quadric 
+* used to draw the ring, the name, radius, orbit distance, day in year, earth
+* days in day the axis the ring turns on, the color of the ring, the planet 
+* it is orbiting, the initial position of the ring, and the texture map for
+* the ring. 
+*
+*****************************************************************************/
 Ring::Ring(string name, float innerRadius, float outerRadius, float orbitDistance, float daysInYear, float dayRatio, float axis[3], float color[4], Planet* orbiting)
 {
 	_planet = gluNewQuadric();
@@ -42,10 +68,27 @@ Ring::Ring(string name, float innerRadius, float outerRadius, float orbitDistanc
     map = TextureMap("SaturnRings.bmp ", _planet); 
 }
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart 
+*
+* Description: the default destructor for the ring class 
+*
+*****************************************************************************/
 Ring::~Ring()
 {
 }
 
+/**************************************************************************//**
+* @author Paul Blasi and Caitlin Taggart
+*
+* Description: Draws the ring in the given state by setting up the material
+* properties, drawing the orbital path drawing the label, rotating as needed 
+* for the day, and drawing the ring in the given state (wireframe or not, 
+* smooth or flat shading, texture mapping or not). 
+* 
+* @param state - the state of the program to draw the ring in 
+*
+*****************************************************************************/
 void Ring::Draw(ProgramState state)
 {
 	//Reset transformations

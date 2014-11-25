@@ -1,3 +1,13 @@
+/************************************************************************//**
+*  @file
+*
+*  @brief This file contains the Camera State function declarations and
+*   global variables, and global constants. The global constants are the 
+*   amount to increment by on a given camera state change. The state changes 
+*   include Zoom In, Zoom Out, Rotate Up, Rotate Down, Pan Up, Pan Down, Pan
+*   left, and Pan Right. 
+***************************************************************************/
+
 #ifndef __CAMERAFUNCTIONS_H__
 #define __CAMERAFUNCTIONS_H__
 
@@ -39,14 +49,37 @@ extern float angle;
 #define M_PI 3.14159265358979323846
 #endif
 
-//function declarations 
+/*!
+* @brief Zooms the camera in 
+*/
 void ZoomIn();
+/*!
+* @brief zooms the camera out 
+*/
 void ZoomOut();
+/*!
+* @brief rotates the camera up 
+*/
 void RotateUp();
+/*!
+* @brief rotates the camera down 
+*/
 void RotateDown();
+/*!
+* @brief pans the camera left 
+*/
 void PanLeft();
+/*!
+* @brief pans the camera right 
+*/
 void PanRight();
+/*!
+* @brief pans the camera up 
+*/
 void PanUp();
+/*!
+* @brief pans the camera down 
+*/
 void PanDown();
 
 #endif
