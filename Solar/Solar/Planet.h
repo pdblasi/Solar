@@ -24,8 +24,8 @@ public:
 	~Planet();
 
     //draw functions 
-	void Draw(ProgramState state);
-	void Update();
+	virtual void Draw(ProgramState state);
+	virtual void Update();
 
     //used for parent child relations 
 	const float* GetPosition();
@@ -33,7 +33,7 @@ public:
 	string GetName();
 
     //creates the solar system 
-	static void CreateSolarSystem(Planet solarSystem[]);
+	static void CreateSolarSystem(Planet* solarSystem[]);
 
 protected:
 	string _name; //name of the planet 

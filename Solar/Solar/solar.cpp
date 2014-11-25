@@ -90,11 +90,10 @@ const unsigned char ESCAPE_KEY = 27;
 const int INIT_SCREEN_WIDTH = 500;
 const int INIT_SCREEN_HEIGHT = 500;
 
-const int NUM_PLANETS = 10;
+const int NUM_PLANETS = 11;
 
 //Global Data
-Planet Planets[NUM_PLANETS];
-Ring SaturnRing;
+Planet* Planets[NUM_PLANETS];
 
 int ScreenWidth; 
 int ScreenHeight;
@@ -141,7 +140,6 @@ int main(int argc, char *argv[])
 
 	//Create Planets
 	Planet::CreateSolarSystem(Planets);
-	SaturnRing = Ring("Saturn' Rings", 90000, 140000, 0, 10761, 10.2, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 1.0, 1.0}, &Planets[6]);
 
 	//Set up light sources
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
@@ -189,10 +187,8 @@ void Animate(int frame)
 	//Ask planet to update itself
 	for (unsigned int i = 0; i < NUM_PLANETS; i++)
 	{
-		Planets[i].Update();
+		Planets[i]->Update();
 	}
-
-	SaturnRing.Update();
 
     //If not paused then call the animate function again. 
 	if (State.Paused == false)
@@ -231,11 +227,8 @@ void Display()
     //Ask the planets to draw themselves.
     for (unsigned int i = 0; i < NUM_PLANETS; i++)
     {
-		Planets[i].Draw(State);
+		Planets[i]->Draw(State);
     }
-
-	SaturnRing.Draw(State);
-
 
     glutSwapBuffers(); 
 }
