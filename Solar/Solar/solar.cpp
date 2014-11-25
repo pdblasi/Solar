@@ -57,6 +57,24 @@ Nov 11, 2014  Set up basic program flow and created structs to hold the
 
 Nov 11, 2014  Set up basic data for planet and the constructor. Not yet
 			  implemented.
+
+Nov 16, 2014  Split Camera and ProgramState functions out of main and into
+			  seperate files to make it easier to split up work.
+
+Nov 16, 2014  Got a single planet up and displaying on screen.
+
+Nov 16, 2014  Initial attempts at camera functions completed.
+
+Nov 17, 2014  Created initial scaling as macros, then moved into private
+			  static functions for easier modification.
+
+Nov 23, 2014  Major effort towards completion. Added lighting model.
+			  Added labels to planets. Added texture mapping. Added ring
+			  system to Saturn.
+
+Nov 24, 2014  Added texture mapping to rings. Made the rings fit into the
+			  Planets array by making Planets an array of pointers. Removed
+			  unneccesary code. Commented and cleaned all files.
 @endverbatim
 *
 *****************************************************************************/
@@ -163,6 +181,13 @@ int main(int argc, char *argv[])
 
 	//Start window
 	glutMainLoop();
+
+	for (int i = 0; i < NUM_PLANETS; i++)
+	{
+		delete Planets[i];
+	}
+
+	delete Planets;
 
 	return 0;
 }
