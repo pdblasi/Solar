@@ -151,7 +151,6 @@ int main(int argc, char *argv[])
 	glLightfv(GL_LIGHT1, GL_LINEAR_ATTENUATION, LinearAttenuation);
 
 	glEnable(GL_LIGHTING);
-	//glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHT0);
@@ -161,8 +160,6 @@ int main(int argc, char *argv[])
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_DIFFUSE);
 	glColorMaterial(GL_FRONT, GL_AMBIENT);
-
-	//glCullFace(GL_BACK);
 
 	//Start window
 	glutMainLoop();

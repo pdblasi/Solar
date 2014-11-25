@@ -98,30 +98,8 @@ void Ring::Draw(ProgramState state)
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, _color);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, _color);
 
-	//Draw Orbital Path
-	const float* orbitingPosition = _orbiting == NULL ? new float[]{ 0, 0, 0 } : (*_orbiting).GetPosition();
-	glBegin(GL_POINTS);
-	for (int i = 0; i < 360; i++)
-	{
-		float angle = float(i) / 180.0 * M_PI;
-		float y = orbitingPosition[0] + _orbitDistance * cos(angle);
-		float z = orbitingPosition[1] + _orbitDistance * sin(angle);
-		glVertex3f(y, z, 0);
-	}
-	glEnd();
-
-	//Draw the Label
-	glRasterPos3f(_position[0], _position[1], _position[2] + 1.5 *_radius);
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)_name.c_str());
-
 	//Translate to position
 	glTranslatef(_position[0], _position[1], _position[2]);
-
-	//Rotate to proper axis
-	//glRotatef(_axis[0], 1.0, 0.0, 0.0);
-	//glRotatef(_axis[1], 0.0, 1.0, 0.0);
-	//glRotatef(_axis[2], 0.0, 0.0, 1.0);
 
 	//Rotate along axis by day based increment
 	glRotatef(_dayAngle, _axis[0], _axis[1], _axis[2]);
