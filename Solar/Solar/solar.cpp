@@ -60,8 +60,8 @@ Nov 11, 2014  Set up basic data for planet and the constructor. Not yet
 @endverbatim
 *
 *****************************************************************************/
-#include <gl\freeglut.h>
-#include <gl\GLU.h>
+#include <GL/freeglut.h>
+#include <GL/glu.h>
 #include <vector>
 #include <string>
 

@@ -12,8 +12,8 @@
 #define __CAMERAFUNCTIONS_H__
 
 //includes 
-#include <gl\freeglut.h>
-#include <gl\GLU.h>
+#include <GL/freeglut.h>
+#include <GL/glu.h>
 #include "Structs.h"
 
 /*!

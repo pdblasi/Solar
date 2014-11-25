@@ -10,8 +10,8 @@
 #define __PLANET_H__
 
 //includes 
-#include <gl\freeglut.h>
-#include <gl\GLU.h>
+#include <GL/freeglut.h>
+#include <GL/glu.h>
 #include <string>
 #include <cmath>
 #include <vector>

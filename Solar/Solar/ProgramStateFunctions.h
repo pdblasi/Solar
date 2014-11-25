@@ -11,8 +11,8 @@
 #ifndef __PROGRAMSTATEFUNCTIONS_H__
 #define __PROGRAMSTATEFUNCTIONS_H__
 
-#include <gl\freeglut.h>
-#include <gl\GLU.h>
+#include <GL/freeglut.h>
+#include <GL/glu.h>
 #include "Structs.h"
 
 /*!

@@ -22,7 +22,7 @@
 #  endif
 #endif
 
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 #include <stdio.h>
 
 

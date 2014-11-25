@@ -65,7 +65,7 @@ Ring::Ring(string name, float innerRadius, float outerRadius, float orbitDistanc
 	_orbitIncrement = (float)(2 * M_PI / _daysInYear);
 	_rotationIncrement = (float)(2 * M_PI / _dayRatio);
 
-    map = TextureMap("SaturnRings.bmp ", _planet); 
+    map = TextureMap("SaturnRings.bmp", _planet); 
 }
 
 /**************************************************************************//**

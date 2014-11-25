@@ -159,19 +159,19 @@ Planet::~Planet()
 void Planet::CreateSolarSystem(Planet* solarSystem[])
 {
     //create the solor system objects 
-	solarSystem[0] = new Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, NULL);
+	solarSystem[0] = new Planet("Sun", scaleSize(696000), 0, 0, 25, new float[3]{0, 0, 1}, new float[4]{1.0, 1.0, 0.0, 1.0}, NULL);
 
-	solarSystem[1] = new Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[]{0, 0, 1}, new float[]{1.0, 0.0, 0.0, 1.0}, solarSystem[0]);
-	solarSystem[2] = new Planet("Venus", scaleSize(6052), scaleDist(108), 225, 5832, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 0.0, 1.0}, solarSystem[0]);
-	solarSystem[3] = new Planet("Earth", scaleSize(6378), scaleDist(150), 365, 24, new float[]{0, 0, 1}, new float[]{0.0, 0.0, 1.0, 1.0}, solarSystem[0]);
-	solarSystem[4] = new Planet("Mars", scaleSize(3394), scaleDist(228), 687, 24.6, new float[]{0, 0, 1}, new float[]{1.0, 0.0, 1.0, 1.0}, solarSystem[0]);
-	solarSystem[5] = new Planet("Jupiter", scaleSize(71398), scaleDist(779), 4332, 9.8, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 1.0, 1.0}, solarSystem[0]);
-	solarSystem[6] = new Planet("Saturn", scaleSize(60270), scaleDist(1424), 10761, 10.2, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 1.0, 1.0}, solarSystem[0]);
-	solarSystem[7] = new Planet("Uranus", scaleSize(25550), scaleDist(2867), 30682, 15.5, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, solarSystem[0]);
-	solarSystem[8] = new Planet("Neptune", scaleSize(24750), scaleDist(4492), 60195, 15.8, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, solarSystem[0]);
+	solarSystem[1] = new Planet("Mercury", scaleSize(2439), scaleDist(58), 88, 1416, new float[3]{0, 0, 1}, new float[4]{1.0, 0.0, 0.0, 1.0}, solarSystem[0]);
+	solarSystem[2] = new Planet("Venus", scaleSize(6052), scaleDist(108), 225, 5832, new float[3]{0, 0, 1}, new float[4]{0.0, 1.0, 0.0, 1.0}, solarSystem[0]);
+	solarSystem[3] = new Planet("Earth", scaleSize(6378), scaleDist(150), 365, 24, new float[3]{0, 0, 1}, new float[4]{0.0, 0.0, 1.0, 1.0}, solarSystem[0]);
+	solarSystem[4] = new Planet("Mars", scaleSize(3394), scaleDist(228), 687, 24.6, new float[3]{0, 0, 1}, new float[4]{1.0, 0.0, 1.0, 1.0}, solarSystem[0]);
+	solarSystem[5] = new Planet("Jupiter", scaleSize(71398), scaleDist(779), 4332, 9.8, new float[3]{0, 0, 1}, new float[4]{1.0, 1.0, 1.0, 1.0}, solarSystem[0]);
+	solarSystem[6] = new Planet("Saturn", scaleSize(60270), scaleDist(1424), 10761, 10.2, new float[3]{0, 0, 1}, new float[4]{0.0, 1.0, 1.0, 1.0}, solarSystem[0]);
+	solarSystem[7] = new Planet("Uranus", scaleSize(25550), scaleDist(2867), 30682, 15.5, new float[3]{0, 0, 1}, new float[4]{1.0, 1.0, 0.0, 1.0}, solarSystem[0]);
+	solarSystem[8] = new Planet("Neptune", scaleSize(24750), scaleDist(4492), 60195, 15.8, new float[3]{0, 0, 1}, new float[4]{1.0, 1.0, 0.0, 1.0}, solarSystem[0]);
 
-	solarSystem[9] = new Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[]{0, 0, 1}, new float[]{1, 1, 1, 1.0}, solarSystem[3]);
-	solarSystem[10] = new Ring("Saturn' Rings", 90000, 140000, 0, 10761, 10.2, new float[]{0, 0, 1}, new float[]{0.0, 1.0, 1.0, 1.0}, solarSystem[6]);
+	solarSystem[9] = new Planet("Moon", scaleSize(1738), scaleDist(.384), 27.3, 27.3, new float[3]{0, 0, 1}, new float[4]{1, 1, 1, 1.0}, solarSystem[3]);
+	solarSystem[10] = new Ring("Saturn' Rings", 90000, 140000, 0, 10761, 10.2, new float[3]{0, 0, 1}, new float[4]{0.0, 1.0, 1.0, 1.0}, solarSystem[6]);
 }
 
 /**************************************************************************//**
@@ -192,7 +192,7 @@ void Planet::Draw(ProgramState state)
 	glMaterialfv(GL_FRONT, GL_AMBIENT, _color);
 
     //Draw Orbital Path
-    const float* orbitingPosition = _orbiting == NULL ? new float[]{ 0, 0, 0 } : (*_orbiting).GetPosition();
+    const float* orbitingPosition = _orbiting == NULL ? new float[3]{ 0, 0, 0 } : (*_orbiting).GetPosition();
     glBegin(GL_POINTS);
     for (int i = 0; i < 360; i++)
     {
