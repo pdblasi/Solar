@@ -49,11 +49,11 @@ public:
     /*!
     * @brief draws the planet in its current state 
     */
-	void Draw(ProgramState state);
+	virtual void Draw(ProgramState state);
     /*!
     * @brief updates the position of the planet and rotation of its axis 
     */
-	void Update();
+	virtual void Update();
 
     /*!
     * @brief returns the position of the planet 
@@ -71,7 +71,7 @@ public:
     /*!
     * @brief creates the solar system 
     */
-	static void CreateSolarSystem(Planet solarSystem[]);
+	static void CreateSolarSystem(Planet* solarSystem[]);
 
 protected:
     /*!

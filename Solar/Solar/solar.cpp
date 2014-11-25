@@ -100,8 +100,8 @@ int ScreenHeight;
 
 //light settings
 GLfloat LightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
-GLfloat AmbientLight[] = { 0.0001, 0.0001, 0.0001, 1.0 };
 GLfloat PointLight[] = { 1, 1, 1, 1 };
+GLfloat AmbientLight[] = { 0.0001, 0.0001, 0.0001, 1.0 };
 
 GLfloat ConstAttenuation[] = { 0 };
 GLfloat LinearAttenuation[] = { 1 };

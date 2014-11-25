@@ -156,7 +156,7 @@ Planet::~Planet()
 * @param solarSystem - the list of planets in the solar system 
 *
 *****************************************************************************/
-void Planet::CreateSolarSystem(Planet solarSystem[])
+void Planet::CreateSolarSystem(Planet* solarSystem[])
 {
     //create the solor system objects 
 	solarSystem[0] = new Planet("Sun", scaleSize(696000), 0, 0, 25, new float[]{0, 0, 1}, new float[]{1.0, 1.0, 0.0, 1.0}, NULL);
